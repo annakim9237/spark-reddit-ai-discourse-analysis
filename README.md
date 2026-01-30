@@ -6,6 +6,7 @@
 The rapid growth of AI in 2023–2024 sparked widespread discussion online, and Reddit became a central platform for early reactions, debates, and speculation. Its tech-leaning demographic and culture of candid, unfiltered commentary made it a useful environment for observing how people engaged with new generative AI systems as they emerged. Using a 445 GB archive of Reddit comments and submissions spanning June 2023 to July 2024, we filtered the data to focus on selected AI-related and general-interest subreddits in order to study these conversations more closely. With distributed processing in Spark, we generated temporal and subreddit-level summaries to track changes in monthly activity and identify which communities contributed most to the overall discourse.
 
 By capturing the scale and structure of AI-related discourse on Reddit, this analysis provides an early snapshot of how digital communities processed, debated, and responded to one of the most transformative technological shifts. 
+
 ---
 
 ## Context
