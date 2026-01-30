@@ -2,6 +2,14 @@
 
 *A data-driven exploration of AI discussions on Reddit using distributed computing.*
 
+### Project Website
+[DSAN-6000 Big Data Project Website](https://kim-anna.quarto.pub/dsan-6000-big-data-project/)
+
+### Final Report (PDF)
+[GU-DSAN6000-FALL-TEAM05.pdf](https://github.com/annakim9237/spark-reddit-ai-discourse-analysis/blob/main/GU-DSAN6000-FALL-TEAM05.pdf)
+
+
+
 ## Abstract
 The rapid growth of AI in 2023–2024 sparked widespread discussion online, and Reddit became a central platform for early reactions, debates, and speculation. Its tech-leaning demographic and culture of candid, unfiltered commentary made it a useful environment for observing how people engaged with new generative AI systems as they emerged. Using a 445 GB archive of Reddit comments and submissions spanning June 2023 to July 2024, we filtered the data to focus on selected AI-related and general-interest subreddits in order to study these conversations more closely. With distributed processing in Spark, we generated temporal and subreddit-level summaries to track changes in monthly activity and identify which communities contributed most to the overall discourse.
 
