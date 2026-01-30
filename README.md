@@ -3,9 +3,9 @@
 *A data-driven exploration of AI discussions on Reddit using distributed computing.*
 
 **You can explore more on the project website and in the full PDF report.**
-- [DSAN-6000 Big Data Project Website](https://kim-anna.quarto.pub/dsan-6000-big-data-project/)
+- [Project Website](https://kim-anna.quarto.pub/dsan-6000-big-data-project/)
 
-- [GU-DSAN6000-FALL-TEAM05.pdf](https://github.com/annakim9237/spark-reddit-ai-discourse-analysis/blob/main/GU-DSAN6000-FALL-TEAM05.pdf)
+- [Project Report (PDF)](https://github.com/annakim9237/spark-reddit-ai-discourse-analysis/blob/main/GU-DSAN6000-FALL-TEAM05.pdf)
 
 
 
