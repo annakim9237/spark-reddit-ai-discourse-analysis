@@ -1,0 +1,86 @@
+subreddit,author,title,body,score,created_utc
+programming,lelanthran,"In 2024, please switch to Firefox",,3265,1704003080.0
+programming,LinearArray,Linus Torvalds flames Google kernel contributor over filesystem suggestion,,2418,1706607071.0
+programming,we_are_mammals,"Google Lays Off Thousands More Employees Despite Record Profits One Year After Laying off 12,000 Employees As Workers Begin Worrying AI is Slowly Replacing Them",,2387,1708418263.0
+programming,bartturner,Google finds faster sorting algorithm using deep reinforcement learning,,2311,1686152878.0
+programming,ketralnis,The NSA advises move to memory-safe languages,,2099,1702403592.0
+LocalLLaMA,Wrong_User_Logged,open AI,,1323,1714313947.0
+LocalLLaMA,jferments,"Friendly reminder in light of GPT-4o release: OpenAI is a big data corporation, and an enemy of open source AI development",,1129,1715633020.0
+LocalLLaMA,Tobiaseins,Google publishes open source 2B and 7B model,,1074,1708521026.0
+LocalLLaMA,cobalt1137,"\1M context\"" models after 16k tokens""",,1023,1714863365.0
+LocalLLaMA,Wrong_User_Logged,OpenAI's response,,1015,1713484565.0
+computerscience,BL1NDX3N0N,,"I’m calling absolute BS, VM escaping isn’t a trivial task and tens to hundreds of thousands of dollars can be awarded in bounties for finding such vulnerabilities. You really think a teacher is going to throw money and fame away to impress students when the former route is the most impressive? That’s also not including the amount of network and local software vulnerabilities required for exploitation which would be separate bounties.",599,1705014299.0
+computerscience,nuclear_splines,,"The words \for scratch\"" are doing a lot of heavy lifting there. Most large software is built on dozens to hundreds of libraries written by previous programmers", which in turn are built on more libraries written by previous programmers.,
+The game developers likely didn't write code to load images and video off the hard drive - they're using a game engine that provides much of that functionality, and the game engine is using existing software like libPNG to decode PNG images, or something like OpenGL to render graphics to the screen, which in turn are built on functionality provided by the operating system.,,
+That's not to say that making a video game is easy by any stretch. Building a large modern video game is an _enormous_ undertaking. But we're also standing on the shoulders of giants, and if you were to count all the code at all those layers written by so many hands over so many years," your 8 million lines may be a significant undercount.""",306,1704945398,
+computerscience,nuclear_splines,/r/ComputerScience will be going dark starting June 12th in protest against Reddit's API changes which will kill 3rd party apps & tools,,288,1686430573.0
+computerscience,BL1NDX3N0N,,"The answers here are weird, the reason is because of shortening words. People who say gooey do so because there are less syllables. UI and “ooey” have the same amount of syllables so there is zero gain.",201,1706695171.0
+computerscience,ninjadude93,,Not the correct question. Every language has different pros and cons and which language you use depends on your problem,162,1705258144.0
+neoliberal,dubyahhh,⚡⚡⚡⚡⚡ TRUMP HUSH MONEY VERDICT THUNDERDOME⚡⚡⚡⚡⚡,,12600,1717102620.0
+neoliberal,Erra0,"Thank you for everything, Mr President",,4417,1721587298.0
+neoliberal,Currymvp2,To whoever told this deranged lunatic to do this interview: we thank you tremendously,,2384,1722452325.0
+neoliberal,Greekball,Joe Biden: Let me say this as clearly as I can. I’m the sitting President of the United States. I’m the nominee of the Democratic party. I’m staying in the race.,,2360,1720209090.0
+neoliberal,FireDistinguishers,How it feels watching Republicans have no answer to Kamala or any prospective VP pick,,2283,1721746109.0
+PerplexityAI,[deleted],,[removed],1,1719753654.0
+PerplexityAI,[deleted],,[removed],1,1721727849.0
+PerplexityAI,TheTwelveYearOld,Is it possible to export threads as markdown or text files?,,1,1694116847.0
+OpenAI,mangosquisher10,Sora can combine videos,,4626,1708057676.0
+OpenAI,FatesWaltz,Damned Lazy AI,,2965,1707103056.0
+OpenAI,BilgeYamtar,Sam Altman's Tweet,,2435,1710146539.0
+OpenAI,johngrady77,I wish more people understood this,,2357,1701573356.0
+OpenAI,Maxie445,Guy builds an AI-steered homing/killer drone in just a few hours,,2088,1709447704.0
+ClaudeAI,illusionst,Sonnet 3.5 is out,,436,1718891352.0
+ClaudeAI,RedstnPhoenx,,Imagine being such an off putting person that even the software engineered to be your friend won't talk to you.,285,1717703052.0
+ClaudeAI,smooshie,Claude really is so self-aware.,,269,1719764712.0
+ClaudeAI,Fabulous_Sherbet_431,Claude called the authorities on me,,266,1716222094.0
+ClaudeAI,Harvard_Med_USMLE267,,Not a bot. Have both. Claude is a lot better.,230,1720124592.0
+datascience,InevitableTraining69,Friendly reminder not to work too hard. You'll just get fired,,1510,1706704645.0
+datascience,Direct-Touch469,Data scientist quits her job at Spotify,,1241,1709037427.0
+datascience,3xil3d_vinyl,,pip install --upgrade pip,1056,1712773884.0
+datascience,therealtiddlydump,,"I believe your friend is what social scientists call \a douchebag\"".""",1052,1703224934.0
+datascience,whiteowled,My greatest data science achievement...,,804,1705416617.0
+singularity,SharpCartographer831,NEW BOSTON DYNAMICS ATLAS VIDEO RELEASE!!,,4736,1707164403.0
+singularity,Glittering-Neck-2505,People trying to act like this isn’t something straight out of science fiction is insane to me,,3935,1715621806.0
+singularity,Maxie445,Jan Leike (co-head of OpenAI's Superalignment team with Ilya) is not even pretending to be OK with whatever is going on behind the scenes,,3688,1715751411.0
+singularity,zyunztl,BREAKING: Nearly 500 employees of OpenAI have signed a letter saying they may quit and join Sam Altman at Microsoft unless the startup's board resigns and reappoints the ousted CEO.,,3463,1700488460.0
+singularity,shogun2909,Musk to drop lawsuit if OpenAI changes its name for ClosedAI,,3231,1709742913.0
+GPT4,wyldcraft,,"Well time to post this again:
+
+Don't argue with the bot. Your conversation log will keep re-confusing it. Instead, go back and refine your original prompt and regenerate the response.
+
+Don't tell the bot what *not* to do. LLMs have a \don't think about pink elephants\"" problem. Rephrase everything as positive instructions.""",38,1706588748.0
+GPT4,friuns,"You gotta see this ChatGPT plugin! It's got your back on Whatsapp, Linkedin, Twitter, and even GPT4 GMail.",,36,1703422344.0
+GPT4,SachaSage,,"I discussed this at length with the creator. They have no training in therapy, no grounding in the field, and they have not done the bare minimum to consider the risks they may engender by offering this llm up under the name ‘therapy’.
+
+They have not evaluated their service for efficacy nor patient safety in any way. They do not know what modality of therapy they are offering, and they became defensive when confronted with the potential risk to their users, rather than openly seeking to learn more about how to mitigate those risks. They are not insured, and are not licensed by any professional body of psychotherapists, psychologists, or counsellors.
+
+You can see in this post - no part of their process involved consulting with professionals or considering the gravity of the service. It’s literally a gpt wrapper idea.
+
+I don’t doubt that llms can be used to supplement good mental health care, but I do not think this is it.",30,1708898492.0
+GPT4,-_1_2_3_-,,people are waisting compute resources on this inane goading shit still?,21,1703619262.0
+GPT4,thebadslime,,You're the Indian misogynist guy that keeps posting stuff like this huh? Kinda remember your name.,20,1703619784.0
+Futurology,katxwoods,"CEOs could easily be replaced with AI, experts argue",,30186,1717322394.0
+Futurology,chrisdh79,"Why aren't millennials and Gen Z having kids? It's the economy, stupid",,24530,1722008226.0
+Futurology,chrisdh79,"World-first tooth-regrowing drug will be given to humans in September | The world's first human trial of a drug that can regenerate teeth will begin in a few months, less than a year on from news of its success in animals.",,22989,1716982288.0
+Futurology,lughnasadh,"The Welsh government is set to pass legislation that will ban politicians who lie from public office, and a poll says 72% of the public backs the measure.",,15585,1722092693.0
+Futurology,[deleted],53% of parents say climate change affects their decision to have more kids,,14539,1687283107.0
+ChatGPT,toreachtheapex,It really does know everything,,30061,1687049929.0
+ChatGPT,Professional-Relaxer,"How is it fair that students can’t use AI, but teachers can?",,21537,1710070910.0
+ChatGPT,Maxie445,Which side are you on?,,20984,1710746013.0
+ChatGPT,adesigne,Self-learning of the robot in 1 hour,,19291,1686048518.0
+ChatGPT,AuralTuneo,Microsoft Image to Video is Terrifying Real,,18100,1713457844.0
+Cyberhwk,,"A lot of places that reduced services for \health and safety\"" seem to have decided it saves too much money to bring back.  Many hotels aren't doing daily service"," fast-casual restaurants are leaning heavily towards take-out and delivery.""",28459,1699801344.0
+[deleted],"Adults who carry around a backpack, whatcha got in there?",,28290,1685928137,
+[deleted],,[removed],27889,1686976064,
+[deleted],What are the cons of NOT having kids?,,26896,1685750479,
+[deleted],,[deleted],25278,1687418798,
+MachineLearning,[deleted],"So long r/MachineLearning, it's been an interesting few years",,1300,1687913569.0
+MachineLearning,[deleted],r/MachineLearning is joining the Reddit Blackout starting June 12th,,1010,1686491301.0
+MachineLearning,currentscurrents,,"I'm just for it on principle. Make reddit remember that we use the site because it does what we want, and if it stops doing that we'll find some other site.",881,1686032663.0
+MachineLearning,we_are_mammals,"Bill Gates told a German newspaper that GPT5 wouldn't be much better than GPT4: \there are reasons to believe that we have reached a plateau\"" [N]""",,765,1700946134.0
+MachineLearning,we_are_mammals,WSJ: The AI industry spent 17x more on Nvidia chips than it brought in in revenue [N],,578,1711858003.0
+StableDiffusion,bot_exe,Sora by openAI looks incredible,,7569,1708021223.0
+StableDiffusion,MikirahMuse,4chan is using AI to recloth women. They call it Dignifai,,3018,1707502680.0
+StableDiffusion,Akumetsu_971,Musk vs Zuckerberg. The fight of the Century !!!,,2915,1687964506.0
+StableDiffusion,mysteryguitarm,⚠️WARNING⚠️ never open a .ckpt file without knowing exactly what's inside (especially SDXL),,2821,1688103638.0
+StableDiffusion,AuralTuneo,Pushing the limits of AI video,,2611,1703517395.0

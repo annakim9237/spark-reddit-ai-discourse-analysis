@@ -1,0 +1,32 @@
+project:
+  type: website
+  output-dir: ../docs
+
+website:
+  title: "DSAN 6000 Big Data Project"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: eda.qmd
+        text: EDA
+      - href: nlp.qmd
+        text: NLP
+      - href: ml.qmd
+        text: ML
+      - href: conclusion.qmd
+        text: Conclusion
+  page-footer:
+    left: |
+      DSAN 6000 Big Data Analytics Project
+    right: |
+      Made with [Quarto](https://quarto.org/)
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-depth: 3
+    code-fold: false
+    code-tools: false

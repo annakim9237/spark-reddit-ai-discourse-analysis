@@ -1,0 +1,142 @@
+---
+title: "AI Discourse at Scale: Topic, Sentiment, and Community Dynamics Across Reddit"
+subtitle: "DSAN 6000 Big Data Analytics - Fall 2024"
+---
+
+## Team Members
+
+- Mandy Sun
+- Erika Atoma
+- Yu-Chien(Violet) Lin
+- Anna Hyunjung Kim
+
+
+## Project Overview
+
+**High-Level Problem Statement:**
+
+As AI adoption accelerated at an unprecedented pace, online communities became one of the most immediate reflections of how society interpreted this change. Yet, while AI tools grew exponentially, far less is understood about how everyday users talked about them—what excited them, what worried them, and how discussions evolved across different AI-focused spaces.
+
+Our core problem is to uncover how AI discourse formed, shifted, and diversified within Reddit communities during the peak of the AI boom. By analyzing subreddit trajectories, engagement dynamics, sentiment change, and topical divergence, we aim to understand what digital conversations can reveal about public perception, technological anxiety, and community-driven innovation.
+
+### Dataset
+
+- **Source:** Reddit Comments and Submissions
+- **Time Period:**  June 1, 2023 to July 31, 2024
+
+- **Data Scale and Size:** 
+
+   | Data Type     | Total Rows     | Size (GB) |
+   |---------------|----------------|-----------|
+   | Comments      | 3,675,768,958  | 7.7       |
+   | Submissions   |   567,890,869  | 0.384     |
+<br>
+- **Subreddits:** 
+
+   | Thematic Category | Included Subreddits |
+   |-------------------|---------------------|
+   | **General Discussion & Public Sentiment** | AskReddit |
+   | **AI Product & Model Communities** | ChatGPT, ClaudeAI, PerplexityAI, OpenAI, GPT4 |
+   | **Open-Source Model Development & Creative Tools** | LocalLLaMA, StableDiffusion |
+   | **Technical, Research, and Employment Communities** | MachineLearning, datascience, programming, computerscience |
+   | **Societal, Political, and Futurist Perspectives** | Futurology, neoliberal, singularity |
+<br>
+- **Filtered Data Scale:**
+
+   | subreddit       |   num_comments |   num_submissions |   total_rows |
+   |-----------------|----------------|-------------------|--------------|
+   | AskReddit       |       55851868 |           2686082 |     58537950 |
+   | neoliberal      |        4673171 |             35352 |      4708523 |
+   | ChatGPT         |        1748893 |            145862 |      1894755 |
+   | singularity     |        1166552 |             37112 |      1203664 |
+   | Futurology      |         898463 |             15884 |       914347 |
+   | StableDiffusion |         763492 |             74526 |       838018 |
+   | LocalLLaMA      |         425095 |             31020 |       456115 |
+   | OpenAI          |         337768 |             25574 |       363342 |
+   | programming     |         325140 |             31396 |       356536 |
+   | datascience     |         193664 |             24717 |       218381 |
+   | MachineLearning |         146901 |             37191 |       184092 |
+   | ClaudeAI        |          59790 |              5097 |        64887 |
+   | computerscience |          31181 |              7504 |        38685 |
+   | GPT4            |           4009 |              1623 |         5632 |
+   | PerplexityAI    |             33 |                28 |           61 |
+
+### Business Questions
+
+We address 10 business questions spanning three analytical approaches:
+
+**Exploratory Data Analysis (EDA):**
+
+1. What percentage of highly-scored submissions generate low-quality discussions (few comments with high controversiality)?
+2. How has the popularity and sentiment around different types of generative AI (e.g., image, text, music, code) evolved across Reddit subreddits over time, and what patterns emerge in user engagement and comment dynamics?
+3. When is the optimal time to post content on AI-related subreddits to maximize engagement and content quality?
+4. What are the behavioral patterns of the top 1% contributors across the AI/tech sphere? Are top contributors specialists or generalists? Which subreddit combinations are most frequently co-visited? How long have users been active? 
+
+
+**Natural Language Processing (NLP):**
+
+5. What are the dominant topics discussed in AI-related Reddit posts?
+6. What sentiment patterns characterize each AI and tech subreddit when focusing specifically on high-engagement users?
+7. How has sentiment toward different generative AI tools (e.g., ChatGPT, Midjourney, Sora) shifted over time across subreddits?
+8. What account (e.g. the percentage) of pessimistic words used to describe AI? 
+
+**Machine Learning (ML):**
+
+9. Can we predict the comment score of a new AI-related post?
+10. Can we predict whether an AI-related Reddit post will go viral? 
+
+
+See [BUSINESS_QUESTIONS.md](https://github.com/your-repo/BUSINESS_QUESTIONS.md) for detailed technical approaches.
+
+## Methodology
+
+### Data Processing Infrastructure
+
+- **Platform:** Apache Spark cluster on AWS EC2
+- **Processing:** Distributed computing with PySpark
+- **Storage:** Amazon S3 for data lake architecture
+- **Scale:** Processing hundreds of millions of rows
+
+### Analysis Pipeline
+
+1. **Data Acquisition & Filtering** (Milestone 0)
+   - Copy full Reddit dataset from source bucket
+   - Filter to subreddits of interest
+   - Generate dataset statistics
+
+2. **Exploratory Data Analysis** (Milestone 1) → [EDA Page](eda.qmd)
+   - Statistical analysis
+   - Temporal patterns
+   - Community comparisons
+
+3. **Natural Language Processing** (Milestone 2) → [NLP Page](nlp.qmd)
+   - Sentiment analysis
+   - Topic modeling
+   - Text mining
+
+4. **Machine Learning** (Milestone 3) → [ML Page](ml.qmd)
+   - Feature engineering
+   - Model training and evaluation
+   - Prediction and classification
+
+5. **Final Analysis** (Milestone 4) → [Conclusion](conclusion.qmd)
+   - Synthesis of findings
+   - Business recommendations
+
+## Navigation
+
+Use the navigation bar above to explore:
+
+- **[EDA](eda.qmd)**: Exploratory data analysis with statistical insights and temporal patterns
+- **[NLP](nlp.qmd)**: Natural language processing analysis including sentiment and topics
+- **[ML](ml.qmd)**: Machine learning models and predictions
+- **[Conclusion](conclusion.qmd)**: Summary of findings and recommendations
+
+## Repository
+
+- **GitHub:** https://github.com/gu-dsan6000/fall-2025-project-team05
+- **Documentation:** All code, data outputs, and analysis documentation available in repository
+
+---
+
+*Last updated: Dec 10, 2025*

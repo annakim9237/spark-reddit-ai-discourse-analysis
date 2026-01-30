@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Exploratory Data Analysis – DSAN 6000 Big Data Project</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-5b4ad623e5705c0698d39aec6f10cf02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">DSAN 6000 Big Data Project</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./eda.html" aria-current="page"> 
+<span class="menu-text">EDA</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./nlp.html"> 
+<span class="menu-text">NLP</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./ml.html"> 
+<span class="menu-text">ML</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./conclusion.html"> 
+<span class="menu-text">Conclusion</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#data-overview" id="toc-data-overview" class="nav-link" data-scroll-target="#data-overview">Data Overview</a>
+  <ul class="collapse">
+  <li><a href="#dataset-summary" id="toc-dataset-summary" class="nav-link" data-scroll-target="#dataset-summary">Dataset Summary</a></li>
+  <li><a href="#subreddit-summary" id="toc-subreddit-summary" class="nav-link" data-scroll-target="#subreddit-summary">Subreddit Summary</a></li>
+  <li><a href="#temporal-distribution" id="toc-temporal-distribution" class="nav-link" data-scroll-target="#temporal-distribution">Temporal Distribution</a></li>
+  </ul></li>
+  <li><a href="#eda-1-ai-subreddit-engagement-analysis" id="toc-eda-1-ai-subreddit-engagement-analysis" class="nav-link" data-scroll-target="#eda-1-ai-subreddit-engagement-analysis">EDA 1: AI Subreddit Engagement Analysis</a>
+  <ul class="collapse">
+  <li><a href="#analysis-approach" id="toc-analysis-approach" class="nav-link" data-scroll-target="#analysis-approach">Analysis Approach</a></li>
+  <li><a href="#findings" id="toc-findings" class="nav-link" data-scroll-target="#findings">Findings</a></li>
+  </ul></li>
+  <li><a href="#eda-2.-engagement-analysis" id="toc-eda-2.-engagement-analysis" class="nav-link" data-scroll-target="#eda-2.-engagement-analysis">EDA 2. Engagement Analysis</a>
+  <ul class="collapse">
+  <li><a href="#analysis-approach-1" id="toc-analysis-approach-1" class="nav-link" data-scroll-target="#analysis-approach-1">Analysis Approach</a></li>
+  <li><a href="#findings-1" id="toc-findings-1" class="nav-link" data-scroll-target="#findings-1">Findings</a></li>
+  </ul></li>
+  <li><a href="#eda-3.-temporal-analysis" id="toc-eda-3.-temporal-analysis" class="nav-link" data-scroll-target="#eda-3.-temporal-analysis">EDA 3. Temporal Analysis</a>
+  <ul class="collapse">
+  <li><a href="#analysis-approach-2" id="toc-analysis-approach-2" class="nav-link" data-scroll-target="#analysis-approach-2">Analysis Approach</a></li>
+  <li><a href="#peak-analysis" id="toc-peak-analysis" class="nav-link" data-scroll-target="#peak-analysis">Peak Analysis</a></li>
+  <li><a href="#findings-2" id="toc-findings-2" class="nav-link" data-scroll-target="#findings-2">Findings</a></li>
+  <li><a href="#posting-patterns-over-time" id="toc-posting-patterns-over-time" class="nav-link" data-scroll-target="#posting-patterns-over-time">Posting Patterns Over Time</a></li>
+  </ul></li>
+  <li><a href="#eda-4.-high-engagement-users-across-ai-subreddits" id="toc-eda-4.-high-engagement-users-across-ai-subreddits" class="nav-link" data-scroll-target="#eda-4.-high-engagement-users-across-ai-subreddits">EDA 4. High Engagement Users Across AI Subreddits</a>
+  <ul class="collapse">
+  <li><a href="#analysis-approach-3" id="toc-analysis-approach-3" class="nav-link" data-scroll-target="#analysis-approach-3">Analysis Approach</a></li>
+  <li><a href="#findings-3" id="toc-findings-3" class="nav-link" data-scroll-target="#findings-3">Findings</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a>
+  <ul class="collapse">
+  <li><a href="#answers-to-eda-business-questions" id="toc-answers-to-eda-business-questions" class="nav-link" data-scroll-target="#answers-to-eda-business-questions">Answers to EDA Business Questions</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Exploratory Data Analysis</h1>
+<p class="subtitle lead">Statistical Analysis and Temporal Patterns</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Milestone 1 Deliverable
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This page is populated during <strong>Milestone 1 (Week 3)</strong> with EDA findings.</p>
+</div>
+</div>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>This page presents exploratory data analysis of our Reddit dataset, addressing [3-4] EDA business questions through statistical analysis, temporal patterns, and visualizations.</p>
+</section>
+<section id="data-overview" class="level2">
+<h2 class="anchored" data-anchor-id="data-overview">Data Overview</h2>
+<section id="dataset-summary" class="level3">
+<h3 class="anchored" data-anchor-id="dataset-summary">Dataset Summary</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 23%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Data Type</th>
+<th>Date Range Start</th>
+<th>Date Range End</th>
+<th>Total Rows</th>
+<th>Size (GB)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Comments</td>
+<td>2023-06-01</td>
+<td>2024-07-31</td>
+<td>3,675,768,958</td>
+<td>7.7</td>
+</tr>
+<tr class="even">
+<td>Submissions</td>
+<td>2023-06-01</td>
+<td>2024-07-31</td>
+<td>567,890,869</td>
+<td>0.384</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="subreddit-summary" class="level3">
+<h3 class="anchored" data-anchor-id="subreddit-summary">Subreddit Summary</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Graph (AVG score)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Graph (Row numbers)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Table</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div id="7ae7c29a" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/cell-2-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div id="f4353ab9" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div id="1090fe4a" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-stdout">
+<pre><code>| subreddit       |   num_comments |   num_submissions |   total_rows |   avg_score | date_range               |
+|:----------------|---------------:|------------------:|-------------:|------------:|:-------------------------|
+| AskReddit       |       55851868 |           2686082 |     58537950 |    10.1212  | 2023-06-01 to 2024-07-31 |
+| neoliberal      |        4673171 |             35352 |      4708523 |    38.2722  | 2023-06-01 to 2024-07-31 |
+| ChatGPT         |        1748893 |            145862 |      1894755 |    28.9111  | 2023-06-01 to 2024-07-31 |
+| singularity     |        1166552 |             37112 |      1203664 |    24.855   | 2023-06-01 to 2024-07-31 |
+| Futurology      |         898463 |             15884 |       914347 |    91.4538  | 2023-06-01 to 2024-07-31 |
+| StableDiffusion |         763492 |             74526 |       838018 |    12.374   | 2023-06-01 to 2024-07-31 |
+| LocalLLaMA      |         425095 |             31020 |       456115 |    11.9276  | 2023-06-01 to 2024-07-31 |
+| OpenAI          |         337768 |             25574 |       363342 |    14.3597  | 2023-06-01 to 2024-07-31 |
+| programming     |         325140 |             31396 |       356536 |    14.1156  | 2023-06-01 to 2024-07-31 |
+| datascience     |         193664 |             24717 |       218381 |     5.23349 | 2023-06-01 to 2024-07-31 |
+| MachineLearning |         146901 |             37191 |       184092 |     4.31358 | 2023-06-01 to 2024-07-31 |
+| ClaudeAI        |          59790 |              5097 |        64887 |     6.86921 | 2023-06-02 to 2024-07-31 |
+| computerscience |          31181 |              7504 |        38685 |     3.81069 | 2023-06-01 to 2024-07-31 |
+| GPT4            |           4009 |              1623 |         5632 |     1.65075 | 2023-06-01 to 2024-07-31 |
+| PerplexityAI    |             33 |                28 |           61 |     1.19102 | 2023-06-17 to 2024-07-31 |</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="temporal-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="temporal-distribution">Temporal Distribution</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Graph</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Table</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div id="a69e5f5e" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div id="a987eedd" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-stdout">
+<pre><code>| year_month   |   num_comments |   num_submissions |   total_rows |
+|:-------------|---------------:|------------------:|-------------:|
+| 2023-06      |        5473928 |            282507 |      5756435 |
+| 2023-07      |        5417176 |            283368 |      5700544 |
+| 2023-08      |        5134608 |            262174 |      5396782 |
+| 2023-09      |        5058008 |            234238 |      5292246 |
+| 2023-10      |        5233959 |            234166 |      5468125 |
+| 2023-11      |        4640586 |            225155 |      4865741 |
+| 2023-12      |        4577603 |            219253 |      4796856 |
+| 2024-01      |        4843712 |            230287 |      5073999 |
+| 2024-02      |        4440991 |            210969 |      4651960 |
+| 2024-03      |        4550964 |            208886 |      4759850 |
+| 2024-04      |        4222311 |            196945 |      4419256 |
+| 2024-05      |        4118102 |            179318 |      4297420 |
+| 2024-06      |        4221146 |            190322 |      4411468 |
+| 2024-07      |        4692926 |            201380 |      4894306 |</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="eda-1-ai-subreddit-engagement-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="eda-1-ai-subreddit-engagement-analysis">EDA 1: AI Subreddit Engagement Analysis</h2>
+<p><strong>Question:</strong></p>
+<p>How do AI subreddit categories differ in user engagement, and how do title characteristics (such as length and question phrasing) shape the number of comments and scores that posts receive?</p>
+<p><strong>Objectives:</strong></p>
+<ol type="1">
+<li>Which AI subreddit categories show the highest overall engagement (average comments and scores)?</li>
+<li>How does post title length relate to user engagement across different AI subreddit categories?</li>
+<li>Do posts phrased as questions receive higher engagement than non-question posts?</li>
+</ol>
+<section id="analysis-approach" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-approach">Analysis Approach</h3>
+<p>First, we mapped groups specific subreddits into six broader AI community categories:</p>
+<ul>
+<li>Chatbot-focused (ChatGPT, OpenAI, GPT4, ClaudeAI, PerplexityAI)</li>
+<li>Creative-generation (StableDiffusion, MidJourney, Sora, AIArt)</li>
+<li>Research/Technical (GenerativeAI, ArtificialIntelligence, MachineLearning, computerscience, datascience, programming)</li>
+<li>Social/Policy (Futurology, singularity, neoliberal)</li>
+<li>Dev/Hardcore (LocalLLaMA, OpenAI_Dev)</li>
+<li>Baseline Control group (AskReddit).</li>
+</ul>
+<p>The following technical approach is catered to each objective.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Objective 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Objective 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false" href="">Objective 3</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<p><strong>Subreddit Categories and Engagement Table:</strong></p>
+<ul>
+<li><p>Aggregate per-category engagement with the following metrics. This includes the number of posts, average title length, wordiness, frequencies of question patterns (question_pct, how_pct, what_pct, why_pct), and detailed engagement statistics (mean/median/max comments and scores with standard deviation), as well as medians via percentile approximation.</p></li>
+<li><p>Expected output is a table of the metrics.</p></li>
+</ul>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<p><strong>Correlation between Title Length and Engagement:</strong></p>
+<ul>
+<li><p>Filtered extreme outliers where comments are less than 500 and the title length is less than 300.</p></li>
+<li><p>Used a 30% sample with a fixed seed of 42 for reproducibility.</p></li>
+<li><p>Expected output to generate scatter plots with trend lines and color-encoded scores.</p></li>
+</ul>
+</div>
+<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
+<p><strong>Comparison of Engagement for Questions vs Non-Question Titles:</strong></p>
+<ul>
+<li><p>Engagement for question-style vs.&nbsp;statement-style titles across each AI subreddit category (grouped where is_question is a binary feature) is calculated by computing the number of posts, average comments, and scores.</p></li>
+<li><p>Pivoted the results and visualized them as side-by-side bar charts to reveal where questions outperform (or underperform) non-questions for average comments and average score.</p></li>
+<li><p>Expected output to generate side-by-side bar charts of average comments and average score grouped by AI subreddit category and colored by post type (“Question” vs “Non Question”).</p></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="findings" class="level3">
+<h3 class="anchored" data-anchor-id="findings">Findings</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">Correlation between Title Length and Engagement</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">Comparison of Engagement for Questions vs Non-Question Titles</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false" href="">Subreddit Categories and Engagement Table</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div id="890c2ce5" class="cell" data-execution_count="6">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<div id="b5871b76" class="cell" data-execution_count="7">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
+<div id="37db8f2f" class="cell" data-execution_count="8">
+<div class="cell-output cell-output-stdout">
+<pre><code>| category            |   total_posts |   avg_title_length |   std_title_length |   avg_word_count |   question_pct |   how_pct |   what_pct |   why_pct |   avg_comments |   std_comments |   median_comments |   avg_score |   std_score |   median_score |   max_comments |   max_score |
+|:--------------------|--------------:|-------------------:|-------------------:|-----------------:|---------------:|----------:|-----------:|----------:|---------------:|---------------:|------------------:|------------:|------------:|---------------:|---------------:|------------:|
+| social_policy       |         88348 |            71.4302 |            46.3101 |         11.7604  |        18.5347 |   2.77086 |    3.05949 |  1.80649  |       59.1651  |       506.703  |                 1 |    78.6648  |    441.199  |              1 |          19813 |       32643 |
+| baseline_control    |       2686082 |            76.5441 |            46.7001 |         14.1994  |        95.3959 |   8.38683 |   31.09    |  4.88019  |       15.386   |       234.855  |                 1 |     9.55255 |    240.646  |              1 |          28219 |       77955 |
+| dev_hardcore        |         31020 |            58.1202 |            36.9042 |          9.72099 |        36.6248 |   5.83495 |    4.19084 |  1.19923  |       10.403   |        25.623  |                 1 |    19.5969  |     64.5326 |              1 |            430 |        1327 |
+| chatbot_focused     |        178184 |            54.802  |            42.9786 |          9.56398 |        25.2598 |   3.70572 |    2.58048 |  1.50013  |        8.13134 |        50.1349 |                 1 |    45.7783  |    563.396  |              1 |           4373 |       61374 |
+| creative_generation |         74526 |            54.1936 |            41.9119 |          9.19823 |        25.8916 |   5.02912 |    2.12275 |  0.927193 |        6.98181 |        26.8422 |                 1 |    21.093   |    129.534  |              1 |           2104 |       10227 |</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p><strong>Key Insights:</strong></p>
+<ul>
+<li>Social policy category shows the highest average of 59 comments and the highest score potential, with extremely viral posts (max score of 32,643). Users in the segment respond strongly to short, impactful titles and to emotionally or socially charged topics.</li>
+<li>Title length shows a weak direct correlation with overall engagement. The Pearson correlation coefficient is near zero (-0.07 to 0.08) across all categories. The engagement is heavily concentrated in shorter titles, which are less than 100 characters, across nearly all categories.</li>
+<li>Posts phrased as questions do not universally outperform non-questions. The baseline control group shows much higher engagement with question-styled posts, while social/policy Reddit communities strongly show non-question statements across both comment engagement and scores. In analyzing the data, it is evident that most technical and creative categories generated a higher number of questions relative to average comment engagement. Conversely, posts comprised of statements demonstrated significantly higher average scores.</li>
+</ul>
+</section>
+</section>
+<section id="eda-2.-engagement-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="eda-2.-engagement-analysis">EDA 2. Engagement Analysis</h2>
+<p><strong>Question:</strong></p>
+<p>How do engagement levels change before and after major AI model updates, and which subreddits exhibit the strongest and most persistent hype spikes?</p>
+<section id="analysis-approach-1" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-approach-1">Analysis Approach</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">Temporal Hype Dynamics</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Visualization Plan</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<ul>
+<li>Compile major AI model release and announcement dates (Claude 2, GPT‑4 Turbo, Stable Diffusion XL, Claude 3, GPT‑4o, etc.) as event anchors.<br>
+</li>
+<li>Define time windows: <strong>pre-event</strong> (2 weeks before), <strong>post-event</strong> (2 weeks after), and <strong>baseline</strong> (4–8 weeks before).<br>
+</li>
+<li>Aggregate daily averages of score, comments, and post counts across all 14 subreddits.<br>
+</li>
+<li>Apply statistical tests (t‑test, Mann‑Whitney U, Cohen’s d) to compare pre vs.&nbsp;post engagement.<br>
+</li>
+<li>Classify hype patterns as short‑term spike, sustained interest, or no significant change.</li>
+</ul>
+</div>
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<ul>
+<li><strong>Before/after bar charts</strong>: Average engagement comparison.<br>
+</li>
+<li><strong>Time series plots</strong>: Pre/post engagement around events.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="findings-1" class="level3">
+<h3 class="anchored" data-anchor-id="findings-1">Findings</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">Before/After Comparison</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">Claude 2 Timeline</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false" href="">Claude 3 Timeline</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-4" role="tab" aria-controls="tabset-6-4" aria-selected="false" href="">GPT-4 Turbo Timeline</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-5" role="tab" aria-controls="tabset-6-5" aria-selected="false" href="">GPT-4o Timeline</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-6" role="tab" aria-controls="tabset-6-6" aria-selected="false" href="">Stable Diffusion XL Timeline</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<div id="7cd93f49" class="cell" data-execution_count="9">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<div id="9d0f7dd1" class="cell" data-execution_count="10">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
+<div id="4f71ce91" class="cell" data-execution_count="11">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-6-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-4-tab">
+<div id="6be1a0d3" class="cell" data-execution_count="12">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-6-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-5-tab">
+<div id="95ee9a3c" class="cell" data-execution_count="13">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/cell-14-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-6-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-6-tab">
+<div id="fdafd3b4" class="cell" data-execution_count="14">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/cell-15-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p><strong>Key Insights:</strong></p>
+<ul>
+<li><p><strong>Short-term hype spikes are common but not universal</strong>: Most AI model releases (Claude 2, GPT-4 Turbo, GPT-4o) show immediate engagement spikes in the 2 weeks following release, with post counts and average scores increasing significantly. However, the magnitude and persistence of these spikes vary substantially across different subreddits and model types.</p></li>
+<li><p><strong>Model-specific subreddits show the strongest response</strong>: Subreddits directly related to specific AI models (e.g., r/ChatGPT for GPT releases, r/ClaudeAI for Claude releases) exhibit the most pronounced and sustained engagement increases, suggesting that dedicated communities are the primary drivers of hype around new releases.</p></li>
+<li><p><strong>Sustained interest is rare</strong>: While initial hype spikes are common, most models show a return to baseline engagement levels within 4-6 weeks post-release. Only the most significant releases (like GPT-4o) demonstrate longer-term sustained interest, indicating that the Reddit community’s attention span for new AI models is relatively short-lived unless the model represents a major technological leap.</p></li>
+</ul>
+</section>
+</section>
+<section id="eda-3.-temporal-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="eda-3.-temporal-analysis">EDA 3. Temporal Analysis</h2>
+<p><strong>Question:</strong></p>
+<p>When is the optimal time to post content on AI-related subreddit to maximize engagement and content quality?</p>
+<section id="analysis-approach-2" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-approach-2">Analysis Approach</h3>
+<ul>
+<li>Extract day_of_week and hour variables from the created_utc timestamp.</li>
+<li>Aggregate data by subreddit × day_of_week × hour to compute num_posts and avg(score).</li>
+<li>Visualize the relationship between posting volume and average score using heatmaps and bar charts.</li>
+<li>Compare the time windows with the highest posting activity and those with the highest average scores to determine the optimal posting window that balances engagement and quality.</li>
+</ul>
+</section>
+<section id="peak-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="peak-analysis">Peak Analysis</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true" href="">Activity</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false" href="">Score</a></li></ul>
+<div class="tab-content">
+<div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
+<p><strong>Hourly Patterns:</strong></p>
+<ul>
+<li>Peak hours: 7pm</li>
+<li>Lowest activity: 9am</li>
+</ul>
+<p><strong>Weekly Patterns:</strong></p>
+<ul>
+<li>Most active days: Tuesday</li>
+<li>Least active days: Saturday</li>
+</ul>
+</div>
+<div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
+<p><strong>Hourly Patterns:</strong></p>
+<ul>
+<li>Peak hours: 2pm</li>
+<li>Lowest activity: 7am</li>
+</ul>
+<p><strong>Weekly Patterns:</strong></p>
+<ul>
+<li>Most active days: Sunday</li>
+<li>Least active days: Thursday</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="findings-2" class="level3">
+<h3 class="anchored" data-anchor-id="findings-2">Findings</h3>
+<p><strong>1. Posts &amp; Score by Day and Time</strong></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true" href="">Plots by Day</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false" href="">Plots by Hours</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-3" role="tab" aria-controls="tabset-8-3" aria-selected="false" href="">Top 10 volume day &amp; time</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-4" role="tab" aria-controls="tabset-8-4" aria-selected="false" href="">Top 10 Score day &amp; time</a></li></ul>
+<div class="tab-content">
+<div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
+<div id="e27c4a4c" class="cell" data-execution_count="15">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
+<div id="c2d43942" class="cell" data-execution_count="16">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/cell-17-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-8-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-3-tab">
+<div id="f1af00ca" class="cell" data-execution_count="17">
+<div class="cell-output cell-output-stdout">
+<pre><code>| day_name   |   hour |   num_posts |   avg_score |
+|:-----------|-------:|------------:|------------:|
+| Tue        |     18 |      554066 |    10.5599  |
+| Tue        |     19 |      552683 |     9.78583 |
+| Tue        |     20 |      552363 |     9.0542  |
+| Tue        |     17 |      548875 |    10.1055  |
+| Thu        |     20 |      545795 |     9.44917 |
+| Wed        |     19 |      544894 |     9.56071 |
+| Wed        |     18 |      544614 |     8.28991 |
+| Wed        |     20 |      541619 |     9.58612 |
+| Thu        |     19 |      541214 |     9.173   |
+| Tue        |     16 |      535441 |    11.676   |</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-8-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-4-tab">
+<div id="692fe278" class="cell" data-execution_count="18">
+<div class="cell-output cell-output-stdout">
+<pre><code>| day_name   |   hour |   num_posts |   avg_score |
+|:-----------|-------:|------------:|------------:|
+| Fri        |     11 |      318190 |     12.9687 |
+| Sun        |     14 |      427008 |     12.4385 |
+| Tue        |     15 |      513208 |     12.2214 |
+| Fri        |     12 |      379281 |     12.1644 |
+| Wed        |     13 |      432746 |     11.9761 |
+| Sun        |     22 |      463517 |     11.8224 |
+| Tue        |     16 |      535441 |     11.676  |
+| Sun        |      0 |      448555 |     11.6496 |
+| Wed        |     14 |      463749 |     11.6162 |
+| Sat        |     21 |      463453 |     11.5745 |</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>2. Heatmap by Day and Time</strong></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true" href="">Posting Activity Heatmap</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-2" role="tab" aria-controls="tabset-9-2" aria-selected="false" href="">Average Score Heatmap</a></li></ul>
+<div class="tab-content">
+<div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
+<div id="a1f9114d" class="cell" data-execution_count="19">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/cell-20-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-9-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-2-tab">
+<div id="3b34f774" class="cell" data-execution_count="20">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/cell-21-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>3. Posting Activity Heatmap by Subreddit</strong></p>
+<div id="196cea84" class="cell" data-execution_count="21">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/cell-22-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Key Insights:</strong></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-10-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-1" role="tab" aria-controls="tabset-10-1" aria-selected="true" href="">Insight 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-2" role="tab" aria-controls="tabset-10-2" aria-selected="false" href="">Insight 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-3" role="tab" aria-controls="tabset-10-3" aria-selected="false" href="">Insight 3</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-4" role="tab" aria-controls="tabset-10-4" aria-selected="false" href="">Insight 4</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-5" role="tab" aria-controls="tabset-10-5" aria-selected="false" href="">Insight 5</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-6" role="tab" aria-controls="tabset-10-6" aria-selected="false" href="">Insight 6</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-7-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-7" role="tab" aria-controls="tabset-10-7" aria-selected="false" href="">Insight 7</a></li></ul>
+<div class="tab-content">
+<div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
+<section id="posting-activity-follows-a-strong-daily-rhythm" class="level4">
+<h4 class="anchored" data-anchor-id="posting-activity-follows-a-strong-daily-rhythm">Posting activity follows a strong daily rhythm</h4>
+<p>Across all subreddits, total posting volume shows a clear U-shape over the day:</p>
+<ul>
+<li>Posts are lowest between <strong>6 AM–10 AM UTC</strong>.</li>
+<li>Activity rises sharply in the afternoon.</li>
+<li>The global peak occurs between <strong>17:00–21:00 UTC</strong>, aligning with U.S. afternoon/evening + Europe evening.</li>
+</ul>
+<p>This reflects the global Reddit user base: the largest traffic periods correspond to overlapping active hours in North America and Europe.</p>
+<hr>
+</section>
+</div>
+<div id="tabset-10-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-2-tab">
+<section id="weekdays-are-more-active-than-weekends" class="level4">
+<h4 class="anchored" data-anchor-id="weekdays-are-more-active-than-weekends">Weekdays are more active than weekends</h4>
+<p>From the <strong>Total Posts by Day</strong> bar plot:</p>
+<ul>
+<li><strong>Tuesday–Thursday</strong> have the highest posting volume.</li>
+<li><strong>Saturday</strong> is the lowest, followed by <strong>Sunday</strong>.</li>
+</ul>
+<p>This suggests:</p>
+<ul>
+<li>Users engage more during workweek computer hours.</li>
+<li>AI-related discussions may be tied to work/study environments.</li>
+</ul>
+<hr>
+</section>
+</div>
+<div id="tabset-10-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-3-tab">
+<section id="average-post-scores-have-less-variation-by-day" class="level4">
+<h4 class="anchored" data-anchor-id="average-post-scores-have-less-variation-by-day">Average post scores have less variation by day</h4>
+<p>Even though posting volume varies, <strong>average scores remain stable</strong>:</p>
+<ul>
+<li>Scores stay within <strong>~9.7–10.5</strong> for all days.</li>
+<li>Sundays show slightly higher average scores, but differences are minimal.</li>
+</ul>
+<p>Interpretation:</p>
+<ul>
+<li>Upvote behavior is not strongly tied to the day of the week.</li>
+<li>Users may upvote at similar rates regardless of day.</li>
+</ul>
+<hr>
+</section>
+</div>
+<div id="tabset-10-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-4-tab">
+<section id="high-scoring-posts-tend-to-appear-during-late-afternoonevening-hours" class="level4">
+<h4 class="anchored" data-anchor-id="high-scoring-posts-tend-to-appear-during-late-afternoonevening-hours">High-scoring posts tend to appear during late afternoon/evening hours</h4>
+<p>From the <strong>Average Score by Hour</strong> plot:</p>
+<ul>
+<li>Peak scores occur at <strong>15:00–17:00 UTC</strong>.</li>
+<li>Lower scores appear between <strong>6–9 AM UTC</strong>.</li>
+</ul>
+<p>This suggests:</p>
+<ul>
+<li>Engagement is highest when U.S. and EU users are simultaneously active.</li>
+<li>Posts in low-traffic hours receive fewer early upvotes, limiting long-term score potential.</li>
+</ul>
+<hr>
+</section>
+</div>
+<div id="tabset-10-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-5-tab">
+<section id="strong-diurnal-patterns-appear-universally-across-subreddits" class="level4">
+<h4 class="anchored" data-anchor-id="strong-diurnal-patterns-appear-universally-across-subreddits">Strong diurnal patterns appear universally across subreddits</h4>
+<p>The multi-subreddit heatmaps show:</p>
+<ul>
+<li>Low morning activity across all subreddits.</li>
+<li>Sharp increases starting in the afternoon.</li>
+<li>Nearly universal peaks in the evening across communities.</li>
+</ul>
+<p>This indicates a shared global posting rhythm, regardless of subreddit type.</p>
+<hr>
+</section>
+</div>
+<div id="tabset-10-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-6-tab">
+<section id="political-and-general-discussion-subreddits-show-the-strongest-spikes" class="level4">
+<h4 class="anchored" data-anchor-id="political-and-general-discussion-subreddits-show-the-strongest-spikes">Political and general-discussion subreddits show the strongest spikes</h4>
+<p>Examples:</p>
+<ul>
+<li><strong>r/neoliberal</strong>, <strong>r/AskReddit</strong>, and <strong>r/Futurology</strong> exhibit extremely intense afternoon/evening posting.</li>
+<li>Technical subreddits like <strong>r/computerscience</strong> and <strong>r/MachineLearning</strong> have more stable, less spiky posting patterns.</li>
+</ul>
+<p>Interpretation:</p>
+<ul>
+<li>Broad audience subreddits encourage high-volume conversational activity.</li>
+<li>Technical subreddits attract steadier, more topic-focused engagement.</li>
+</ul>
+<hr>
+</section>
+</div>
+<div id="tabset-10-7" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-7-tab">
+<section id="ai-modelspecific-subreddits-peak-around-usage-hours" class="level4">
+<h4 class="anchored" data-anchor-id="ai-modelspecific-subreddits-peak-around-usage-hours">AI model–specific subreddits peak around usage hours</h4>
+<p>Subreddits such as:</p>
+<ul>
+<li><strong>r/ChatGPT</strong></li>
+<li><strong>r/StableDiffusion</strong></li>
+<li><strong>r/GPT4</strong></li>
+<li><strong>r/ClaudeAI</strong></li>
+</ul>
+<p>tend to show:</p>
+<ul>
+<li>Increased activity after work hours,</li>
+<li>Another rise before late night,</li>
+<li>A peak between <strong>17:00–22:00 UTC</strong>.</li>
+</ul>
+<p>Interpretation:</p>
+<ul>
+<li>Users often experiment with AI tools after work/school,</li>
+<li>And share outputs or questions during evening hours.</li>
+</ul>
+</section>
+</div>
+</div>
+</div>
+</section>
+<section id="posting-patterns-over-time" class="level3">
+<h3 class="anchored" data-anchor-id="posting-patterns-over-time">Posting Patterns Over Time</h3>
+<ul>
+<li><strong>Low posting in early morning</strong>,<br>
+</li>
+<li>rising through the afternoon,<br>
+</li>
+<li><strong>peaking in early evening (UTC)</strong>,<br>
+</li>
+<li>then gradually decreasing overnight.</li>
+</ul>
+<p>Average post scores remain stable across the week, with only slight variations.</p>
+<p>Subreddit heatmaps confirm a universal posting rhythm across technical, political, and model-specific communities.</p>
+</section>
+</section>
+<section id="eda-4.-high-engagement-users-across-ai-subreddits" class="level2">
+<h2 class="anchored" data-anchor-id="eda-4.-high-engagement-users-across-ai-subreddits">EDA 4. High Engagement Users Across AI Subreddits</h2>
+<p><strong>Question:</strong></p>
+<p><strong>How do high-engagement contributors behave across the AI/tech subreddit ecosystem?</strong></p>
+<blockquote class="blockquote">
+<p>Are top users specialists who stay within one community, or generalists who move across several? How long do these top contributors remain active? Which subreddit pairs share the strongest cross-engagement among these influential users?</p>
+</blockquote>
+<section id="analysis-approach-3" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-approach-3">Analysis Approach</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-11-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-1" role="tab" aria-controls="tabset-11-1" aria-selected="true" href="">Identifying High-Engagement Users (Top 1%)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-2" role="tab" aria-controls="tabset-11-2" aria-selected="false" href="">Measuring Subreddit Participation</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-3" role="tab" aria-controls="tabset-11-3" aria-selected="false" href="">Classifying Contributors: Specialists vs.&nbsp;Generalists</a></li></ul>
+<div class="tab-content">
+<div id="tabset-11-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-11-1-tab">
+<ul>
+<li>Using the full AI/tech dataset, we computed each author’s total number of posts and comments across all subreddits.</li>
+<li>The 99th percentile of posting activity served as the threshold for “Top 1% Contributors.”</li>
+<li>These users represent the most persistent, visible, and influential voices in the AI ecosystem.</li>
+</ul>
+</div>
+<div id="tabset-11-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-2-tab">
+<p>For each top contributor, we extracted participation metrics:</p>
+<p>Subreddits posted in:</p>
+<ul>
+<li>A set of all AI/tech subreddits where the author contributed. Breadth of participation:</li>
+<li>The number of distinct subreddits per user. Most active community:</li>
+<li>The subreddit where the user posted most frequently or accumulated the highest total score.</li>
+</ul>
+<p>These metrics allowed us to model contributor behavior across communities.</p>
+</div>
+<div id="tabset-11-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-3-tab">
+<p>We categorized users based on the breadth of their subreddit participation:</p>
+<ul>
+<li>Specialists: 1 subreddit</li>
+<li>Broad participants: 2–3 subreddits</li>
+<li>Generalists: 4+ subreddits</li>
+</ul>
+<p>This reveals whether the top contributors cluster into niche communities or operate across broader AI spaces. ### Cross-Community Co-Engagement</p>
+<p>To understand ecosystem-level movement, we:</p>
+<ul>
+<li>Calculated pairwise counts of shared authors between subreddit pairs.</li>
+<li>Ranked the top 25 co-engagement pairs to reveal the strongest cross-community ties.</li>
+<li>Interpreted connections between technical, model-centric, and futurist subreddits.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="findings-3" class="level3">
+<h3 class="anchored" data-anchor-id="findings-3">Findings</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-12-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-1" role="tab" aria-controls="tabset-12-1" aria-selected="true" href="">Specialists vs.&nbsp;Generalists</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-2" role="tab" aria-controls="tabset-12-2" aria-selected="false" href="">Active Span of Top Contributors</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-3" role="tab" aria-controls="tabset-12-3" aria-selected="false" href="">Top 25 Cross-Subreddit Co-Engagement Pairs</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-4" role="tab" aria-controls="tabset-12-4" aria-selected="false" href="">Heatmap of Cross-Subreddits</a></li></ul>
+<div class="tab-content">
+<div id="tabset-12-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-12-1-tab">
+<div id="a169d8d8" class="cell" data-execution_count="22">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/cell-23-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-12-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-2-tab">
+<div id="1100f1a6" class="cell" data-execution_count="23">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/cell-24-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-12-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-3-tab">
+<div id="70ef04e7" class="cell" data-execution_count="24">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/cell-25-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-12-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-4-tab">
+<div id="40c0e2ed" class="cell" data-execution_count="25">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/cell-26-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p><strong>Key Insights:</strong></p>
+<p><strong>Specialists dominate, but generalists are close behind:</strong></p>
+<p>Many top contributors focus their activity in one subreddit, but a substantial share participates across 4+ subreddits — suggesting two distinct behavioral archetypes: deep experts vs.&nbsp;ecosystem explorers.</p>
+<p><strong>Broad participants form the smallest group:</strong></p>
+<p>Users active in 2–3 communities appear less common, indicating a polarization between focused specialists and highly mobile generalists.</p>
+<p><strong>Active spans cluster within ~1 year:</strong></p>
+<p>The majority of top contributors have active spans under 1.2 years, which is equivalent to the length of this dataset. Indicative of long-term users who are likely to remain active as AI grows.</p>
+<p><strong>Cross-engagement highlights thematic neighborhoods:</strong></p>
+<p>The strongest co-engagement pairs connect:</p>
+<pre><code>* ChatGPT ↔ singularity / Futurology / OpenAI (model-centric → future/AI-philosophy)
+* LocalLLaMA ↔ StableDiffusion / MachineLearning (open-source → technical engineering)
+* StableDiffusion ↔ singularity / Futurology (generative media → future tech culture)</code></pre>
+<p>These patterns show that top contributors bridge communities that share similar ideologies, use cases, or technological excitement.</p>
+<p><strong>ChatGPT emerges as the central hub of the ecosystem:</strong></p>
+<p>It appears in most top pairs, suggesting it is the “gateway subreddit” linking casual AI users, open-source communities, and speculative tech audiences.</p>
+</section>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<section id="answers-to-eda-business-questions" class="level3">
+<h3 class="anchored" data-anchor-id="answers-to-eda-business-questions">Answers to EDA Business Questions</h3>
+<ol type="1">
+<li><strong>How do AI subreddit categories differ in user engagement, and how do title characteristics (such as length and question phrasing) shape the number of comments and scores that posts receive?</strong>:</li>
+</ol>
+<p>The analysis of user engagement in AI subreddits shows that community dynamics play a crucial role, often outweighing standard title characteristics. The social policy category leads in engagement, averaging 59 comments per post, with effective titles being concise and emotionally resonant. Title length has minimal correlation with interaction, as most engagement arises from titles under 100 characters. While question phrasing generally boosts engagement, this is not the case in social and policy communities, where statements achieve higher average scores. Adapting content to the specific characteristics of each subreddit is essential for maximizing engagement.</p>
+<ol start="2" type="1">
+<li><strong>How has the popularity and sentiment around different types of generative AI (e.g., image, text, music, code) evolved across Reddit subreddits over time, and what patterns emerge in user engagement and comment dynamics?</strong></li>
+</ol>
+<p>The evolution of generative AI popularity and sentiment across Reddit reveals distinct patterns for different AI categories. <strong>Text AI tools</strong> (ChatGPT, GPT-4, Claude) show the most dramatic engagement spikes around major model releases, with subreddits like r/ChatGPT and r/OpenAI experiencing 2-3x increases in post volume and average scores immediately following announcements. These spikes are typically short-lived (2-4 weeks), suggesting that text AI communities are highly reactive to new releases but quickly return to baseline discussion levels. <strong>Creative AI tools</strong> (Midjourney, Stable Diffusion, Sora) exhibit more sustained engagement patterns, with image generation subreddits maintaining higher baseline activity and showing less dramatic but more persistent spikes. The temporal hype analysis reveals that Creative AI communities tend to have longer discussion cycles around new features, likely due to the visual and shareable nature of their outputs. <strong>Research/Tech subreddits</strong> (r/MachineLearning, r/generativeai) show the most stable engagement patterns, with gradual increases rather than sharp spikes, reflecting their focus on technical analysis and long-term trends rather than immediate product releases. Across all categories, sentiment analysis indicates that discussions are heavily focused on technical challenges, limitations, and problem-solving, with negative sentiment words like “error,” “problem,” and “concern” appearing frequently across communities. However, the intensity of these concerns varies by category: Text AI discussions emphasize reliability and accuracy issues, while Creative AI communities focus more on quality and workflow constraints. Overall, the data suggests that Reddit’s AI communities are primarily driven by practical usage concerns rather than pure enthusiasm, with engagement patterns reflecting both the technical maturity of different AI categories and the specific needs of their user bases.</p>
+<ol start="3" type="1">
+<li><strong>When is the optimal time to post content on AI-related subreddit to maximize engagement and content quality?</strong></li>
+</ol>
+<p>Reddit posting activity is dominated by a strong, universal daily rhythm and weekday focus. Activity is highest from Tuesday to Thursday and lowest on weekends. Globally, the peak posting volume occurs between 17:00–21:00 UTC, aligning with simultaneous active hours in North America and Europe, while the lowest activity is from 6 AM–10 AM UTC. Higher-scoring posts tend to appear just before this volume peak (15:00–17:00 UTC). This pattern, including evening peaks in AI-specific subreddits like r/ChatGPT, reflects that AI-related discussions are primarily conducted during workweek and evening hours.</p>
+<ol start="4" type="1">
+<li><strong>How do high-engagement contributors behave across the AI/tech subreddit ecosystem?</strong></li>
+</ol>
+<p>High-engagement contributors—defined as the top 1% of users by posting activity—play a disproportionately influential role in shaping discourse across AI and tech subreddits. Their behavior reveals two distinct participation profiles: specialists and generalists. Specialists, who post exclusively within a single subreddit, form the largest segment of top contributors and tend to anchor themselves within focused communities such as r/LocalLLaMA or r/MachineLearning. In contrast, generalists participate across four or more AI-related subreddits and act as connective tissue within the ecosystem, bridging communities that otherwise differ in focus, culture, and technical depth.</p>
+<p>Along with their high posting volume, these contributors typically have remained consistent throughout the year of the dataset. This indicates that they are most likely here to stay as AI models and products continue to grow.</p>
+<p>Cross-engagement patterns further highlight how these contributors knit the ecosystem together. Subreddits like r/ChatGPT serve as major hubs, sharing large pools of top contributors with communities ranging from future-oriented spaces (r/singularity, r/Futurology) to technical or open-source communities (r/LocalLLaMA, r/MachineLearning). Meanwhile, image-generation communities such as r/StableDiffusion exhibit strong ties with futurist and AI-philosophy subreddits, reflecting overlapping user interests in creativity, long-term implications, and technological acceleration.</p>
+<p>Overall, the behavior of top contributors reveals a dynamic ecosystem structured around both deep niche participation and broad cross-community movement. These users set the tone, link conversations across domains, and heavily influence how information and trends propagate throughout the AI subreddit landscape.</p>
+<hr>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Code and Data
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>All EDA code is available in <code>code/eda/</code> directory. Results are saved in <code>data/csv/</code> and visualizations in <code>data/plots/</code>.</p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>DSAN 6000 Big Data Analytics Project</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Made with <a href="https://quarto.org/">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

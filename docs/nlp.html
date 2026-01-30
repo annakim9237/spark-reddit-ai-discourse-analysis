@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Natural Language Processing – DSAN 6000 Big Data Project</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-5b4ad623e5705c0698d39aec6f10cf02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">DSAN 6000 Big Data Project</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./eda.html"> 
+<span class="menu-text">EDA</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./nlp.html" aria-current="page"> 
+<span class="menu-text">NLP</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./ml.html"> 
+<span class="menu-text">ML</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./conclusion.html"> 
+<span class="menu-text">Conclusion</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#nlp1exploratory-topic-modeling" id="toc-nlp1exploratory-topic-modeling" class="nav-link" data-scroll-target="#nlp1exploratory-topic-modeling">NLP1:Exploratory Topic Modeling</a>
+  <ul class="collapse">
+  <li><a href="#discovered-topics" id="toc-discovered-topics" class="nav-link" data-scroll-target="#discovered-topics">Discovered Topics</a></li>
+  <li><a href="#wordclouds" id="toc-wordclouds" class="nav-link" data-scroll-target="#wordclouds">Wordclouds</a></li>
+  <li><a href="#lda-15-topics" id="toc-lda-15-topics" class="nav-link" data-scroll-target="#lda-15-topics">LDA 15 topics</a></li>
+  <li><a href="#technical-approach" id="toc-technical-approach" class="nav-link" data-scroll-target="#technical-approach">Technical Approach :</a></li>
+  <li><a href="#key-insight" id="toc-key-insight" class="nav-link" data-scroll-target="#key-insight">Key Insight</a></li>
+  </ul></li>
+  <li><a href="#nlp2-emotion-sentiment-patterns-of-high-engagement-users" id="toc-nlp2-emotion-sentiment-patterns-of-high-engagement-users" class="nav-link" data-scroll-target="#nlp2-emotion-sentiment-patterns-of-high-engagement-users">NLP2: Emotion &amp; Sentiment Patterns of High-Engagement Users</a>
+  <ul class="collapse">
+  <li><a href="#analysis-approach" id="toc-analysis-approach" class="nav-link" data-scroll-target="#analysis-approach">Analysis Approach</a></li>
+  <li><a href="#findings" id="toc-findings" class="nav-link" data-scroll-target="#findings">Findings</a></li>
+  <li><a href="#key-insights" id="toc-key-insights" class="nav-link" data-scroll-target="#key-insights">Key Insights</a></li>
+  </ul></li>
+  <li><a href="#nlp3sentiment-analysis" id="toc-nlp3sentiment-analysis" class="nav-link" data-scroll-target="#nlp3sentiment-analysis">NLP3:Sentiment Analysis</a>
+  <ul class="collapse">
+  <li><a href="#analysis-approach-1" id="toc-analysis-approach-1" class="nav-link" data-scroll-target="#analysis-approach-1">Analysis Approach</a></li>
+  <li><a href="#findings-1" id="toc-findings-1" class="nav-link" data-scroll-target="#findings-1">Findings</a></li>
+  <li><a href="#key-insights-1" id="toc-key-insights-1" class="nav-link" data-scroll-target="#key-insights-1">Key Insights</a></li>
+  </ul></li>
+  <li><a href="#nlp4-profanity-language-frequency-analysis" id="toc-nlp4-profanity-language-frequency-analysis" class="nav-link" data-scroll-target="#nlp4-profanity-language-frequency-analysis">NLP4: Profanity Language Frequency Analysis</a>
+  <ul class="collapse">
+  <li><a href="#analysis-approach-2" id="toc-analysis-approach-2" class="nav-link" data-scroll-target="#analysis-approach-2">Analysis Approach</a></li>
+  <li><a href="#findings-2" id="toc-findings-2" class="nav-link" data-scroll-target="#findings-2">Findings</a></li>
+  <li><a href="#key-insights-2" id="toc-key-insights-2" class="nav-link" data-scroll-target="#key-insights-2">Key Insights:</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a>
+  <ul class="collapse">
+  <li><a href="#answers-to-nlp-business-questions" id="toc-answers-to-nlp-business-questions" class="nav-link" data-scroll-target="#answers-to-nlp-business-questions">Answers to NLP Business Questions</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Natural Language Processing</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Milestone 2 Deliverable
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This page is populated during <strong>Milestone 2 (Week 5)</strong> with NLP findings.</p>
+</div>
+</div>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>This page presents NLP analysis addressing [3-4] NLP business questions through sentiment analysis, topic modeling, and text mining.</p>
+</section>
+<section id="nlp1exploratory-topic-modeling" class="level2">
+<h2 class="anchored" data-anchor-id="nlp1exploratory-topic-modeling">NLP1:Exploratory Topic Modeling</h2>
+<p><strong>Question:</strong> What are the dominant topics discussed in AI-related Reddit posts?</p>
+<section id="discovered-topics" class="level3">
+<h3 class="anchored" data-anchor-id="discovered-topics">Discovered Topics</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">without neoliberal subreddit</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">with neoliberal subreddit</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div id="e6493fb1" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="nlp_files/figure-html/cell-2-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div id="6aafcb28" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="nlp_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="wordclouds" class="level3">
+<h3 class="anchored" data-anchor-id="wordclouds">Wordclouds</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">wordclouds without neoliberal subreddit</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">wordclouds with neoliberal subreddit</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div id="88146464" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="nlp_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div id="db8a6948" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="nlp_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="lda-15-topics" class="level3">
+<h3 class="anchored" data-anchor-id="lda-15-topics">LDA 15 topics</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Plots for without neoliberal subreddit</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Table for without neoliberal subreddit</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false" href="">Plots for with neoliberal subreddit</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-4" role="tab" aria-controls="tabset-3-4" aria-selected="false" href="">Table for with neoliberal subreddit</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div id="c6d9641d" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="nlp_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div id="effb4f07" class="cell" data-execution_count="6">
+<div class="cell-output cell-output-stdout">
+<pre><code>|   topic | terms_words                                                                                                                                                                   |
+|--------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|       0 | ['human', 'agi', 'humans', 'world', 'way', 'point', 'going', 'want', 'need', 'doesn', 'change', 'money', 'future', 'intelligence', 'problem']                                 |
+|       1 | ['chatgpt', 'please', 'image', 'openai', 'prompt', 'conversation', 'concerns', 'reply', 'discord', 'bot', 'questions', 'note', 'bots', 'compose', 'performed']                |
+|       2 | ['code', 'work', 'job', 'data', 'company', 'way', 'want', 'experience', 'need', 'team', 'point', 'new', 'learn', 'working', 'real']                                           |
+|       3 | ['code', 'models', 'use', 'run', 'memory', 'model', 'work', 'gpu', 'gemini', 'using', 'need', 'ram', 'first', 'sure', 'try']                                                  |
+|       4 | ['subject', 'game', 'shit', 'want', 'women', 'delete', 'content', 'music', 'remindmebot', 'different', 'men', 'compose', 'use', 'instead', 'seen']                            |
+|       5 | ['questions', 'please', 'question', 'moderators', 'read', 'machinelearning', 'removed', 'related', 'regarding', 'compose', 'suggest', 'respond', 'unless', 'likely', 'title'] |
+|       6 | ['mean', 'guy', 'money', 'doesn', 'going', 'makes', 'thought', 'want', 'didn', 'idea', 'bit', 'line', 'dude', 'sure', 'using']                                                |
+|       7 | ['bot', 'please', 'chatgpt', 'karma', 'concerns', 'questions', 'performed', 'compose', 'moderators', 'open', 'removed', 'hey', 'gain', 'account', 'serious']                  |
+|       8 | ['world', 'energy', 'need', 'power', 'china', 'cost', 'life', 'cars', 'going', 'car', 'already', 'every', 'new', 'way', 'solar']                                              |
+|       9 | ['use', 'data', 'images', 'need', 'using', 'training', 'work', 'companies', 'want', 'lora', 'new', 'understand', 'etc', 'models', 'content']                                  |
+|      10 | ['model', 'models', 'data', 'use', 'using', 'training', 'prompt', 'llm', 'text', 'gpt', 'context', 'way', 'work', 'different', 'llms']                                        |
+|      11 | ['auto', 'redd', 'width', 'webp', 'sorry', 'pjpg', 'love', 'prompt', 'thanks', 'thank', 'image', 'used', 'try', 'picture', 'word']                                            |
+|      12 | ['github', 'sdxl', 'stable', 'old', 'diffusion', 'civitai', 'looks', 'comfyui', 'space', 'man', 'models', 'lora', 'face', 'use', 'top']                                       |
+|      13 | ['use', 'gpt', 'openai', 'google', 'chat', 'voice', 'chatgpt', 'api', 'want', 'using', 'need', 'app', 'free', 'open', 'new']                                                  |
+|      14 | ['work', 'going', 'right', 'way', 'want', 'jobs', 'use', 'sure', 'kids', 'gonna', 'pretty', 'need', 'won', 'robots', 'every']                                                 |</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
+<div id="192adf57" class="cell" data-execution_count="7">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="nlp_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-3-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-4-tab">
+<div id="0b925792" class="cell" data-execution_count="8">
+<div class="cell-output cell-output-stdout">
+<pre><code>|   topic | terms_words                                                                                                                                                                           |
+|--------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|       0 | ['use', 'model', 'code', 'data', 'using', 'models', 'need', 'run', 'github', 'chat', 'context', 'llm', 'work', 'new', 'gpt']                                                          |
+|       1 | ['chatgpt', 'image', 'please', 'openai', 'prompt', 'conversation', 'reply', 'concerns', 'discord', 'bot', 'help', 'gpt', 'free', 'bots', 'articles']                                  |
+|       2 | ['way', 'though', 'first', 'state', 'history', 'going', 'different', 'biden', 'isn', 'case', 'fact', 'sure', 'doesn', 'makes', 'legal']                                               |
+|       3 | ['words', 'language', 'points', 'use', 'need', 'different', 'work', 'learn', 'using', 'every', 'write', 'done', 'book', 'writing', 'learning']                                        |
+|       4 | ['serious', 'thanks', 'discussion', 'change', 'topic', 'power', 'attention', 'child', 'need', 'tag', 'enjoy', 'climate', 'nuclear', 'hate', 'notice']                                 |
+|       5 | ['money', 'going', 'companies', 'need', 'company', 'agi', 'work', 'humans', 'new', 'way', 'future', 'want', 'point', 'real', 'doesn']                                                 |
+|       6 | ['trump', 'biden', 'party', 'right', 'election', 'vote', 'government', 'president', 'last', 'going', 'left', 'voters', 'shit', 'win', 'since']                                        |
+|       7 | ['human', 'mean', 'brain', 'right', 'consciousness', 'doesn', 'able', 'real', 'name', 'use', 'believe', 'seen', 'response', 'isn', 'self']                                            |
+|       8 | ['data', 'work', 'job', 'human', 'level', 'intelligence', 'need', 'want', 'way', 'sorry', 'enough', 'learning', 'experience', 'science', 'training']                                  |
+|       9 | ['china', 'world', 'countries', 'need', 'country', 'want', 'housing', 'economy', 'way', 'population', 'new', 'going', 'use', 'work', 'high']                                          |
+|      10 | ['use', 'model', 'models', 'want', 'way', 'using', 'prompt', 'gpt', 'try', 'image', 'images', 'work', 'art', 'doesn', 'right']                                                        |
+|      11 | ['auto', 'redd', 'width', 'webp', 'pjpg', 'israel', 'hamas', 'war', 'gaza', 'israeli', 'ukraine', 'military', 'jews', 'right', 'way']                                                 |
+|      12 | ['man', 'right', 'women', 'old', 'want', 'men', 'going', 'shit', 'life', 'way', 'media', 'fucking', 'kids', 'social', 'didn']                                                         |
+|      13 | ['please', 'questions', 'neoliberal', 'moderators', 'compose', 'concerns', 'bot', 'performed', 'removed', 'new', 'participate', 'machinelearning', 'linked', 'submission', 'replies'] |
+|      14 | ['bot', 'open', 'voice', 'karma', 'please', 'chatgpt', 'account', 'source', 'hey', 'gain', 'allowed', 'asking', 'questions', 'concerns', 'performed']                                 |</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="technical-approach" class="level3">
+<h3 class="anchored" data-anchor-id="technical-approach">Technical Approach :</h3>
+<section id="dataset-filtering" class="level4">
+<h4 class="anchored" data-anchor-id="dataset-filtering">1. Dataset Filtering</h4>
+<p>We restrict the dataset to AI-related discussions by:</p>
+<ul>
+<li><p>Selecting comments only from the following AI-focused subreddits: ChatGPT, OpenAI, GPT4, ClaudeAI, PerplexityAI, StableDiffusion, MidJourney, Sora, AIArt, GenerativeAI, ArtificialIntelligence, MachineLearning, computerscience, datascience, programming, Futurology, singularity, neoliberal, LocalLLaMA, OpenAI_Dev</p></li>
+<li><p>Removing comments that:</p></li>
+<li><p>Are null or empty<br>
+</p></li>
+<li><p>Contain fewer than <strong>30 characters</strong></p></li>
+</ul>
+<p>This ensures that analysis is conducted on substantive, content-rich comments.</p>
+<hr>
+</section>
+<section id="text-processing" class="level4">
+<h4 class="anchored" data-anchor-id="text-processing">2. Text Processing</h4>
+<section id="tokenization" class="level5">
+<h5 class="anchored" data-anchor-id="tokenization">2.1 Tokenization</h5>
+<p>A <code>RegexTokenizer</code> is applied with:</p>
+<ul>
+<li>Lowercasing enabled (<code>toLowercase=True</code>)</li>
+<li>Splitting on non-word characters (<code>pattern="\\W+"</code>)</li>
+</ul>
+</section>
+<section id="stopword-removal" class="level5">
+<h5 class="anchored" data-anchor-id="stopword-removal">2.2 Stopword Removal</h5>
+<p>We apply an expanded stopword list that includes:</p>
+<ul>
+<li>Default English stopwords<br>
+</li>
+<li>Conversational fillers (e.g., <em>lol, haha, yeah, hmm, well, okay</em>)<br>
+</li>
+<li>Reddit-specific terms (e.g., <em>thread, subreddit, comment, mod</em>)<br>
+</li>
+<li>URL and formatting artifacts (e.g., <em>http, https, www, png, jpg, youtube</em>)<br>
+</li>
+<li>Vague adjectives and common auxiliary verbs<br>
+</li>
+<li>Pronouns and common function words</li>
+</ul>
+<p>This step removes generic, low-information tokens prior to modeling.</p>
+<hr>
+</section>
+</section>
+<section id="custom-token-filtering-udf" class="level4">
+<h4 class="anchored" data-anchor-id="custom-token-filtering-udf">3. Custom Token Filtering (UDF)</h4>
+<p>After stopword removal, a custom Spark UDF applies additional filters:</p>
+<ul>
+<li>Remove tokens that begin with:</li>
+<li><code>http</code>, <code>www</code>, <code>u/</code>, <code>r/</code></li>
+<li>Remove tokens that:</li>
+<li>Contain digits<br>
+</li>
+<li>Are not alphabetic<br>
+</li>
+<li>Have fewer than <strong>3 characters</strong><br>
+</li>
+<li>Appear in the expanded stopword list</li>
+</ul>
+<p>Documents with zero remaining tokens are discarded.</p>
+<p>This stage produces a clean, semantically meaningful token list for each comment.</p>
+<hr>
+</section>
+<section id="modeling" class="level4">
+<h4 class="anchored" data-anchor-id="modeling">4. Modeling</h4>
+<section id="countvectorizer" class="level5">
+<h5 class="anchored" data-anchor-id="countvectorizer">4.1 CountVectorizer</h5>
+<p>We transform the cleaned tokens into a sparse term–document matrix using: vocabSize = 10,000 minDF = 50</p>
+</section>
+<section id="latent-dirichlet-allocation-lda" class="level5">
+<h5 class="anchored" data-anchor-id="latent-dirichlet-allocation-lda">4.2 Latent Dirichlet Allocation (LDA)</h5>
+<p>We train an LDA model configured with:</p>
+<pre><code>k = 15 topics
+maxIter = 20
+seed = 42</code></pre>
+<p>This produces interpretable topic structures that reflect key themes in AI-related discussions.</p>
+<hr>
+</section>
+</section>
+<section id="outputs" class="level4">
+<h4 class="anchored" data-anchor-id="outputs">5. Outputs</h4>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">5.1 CSV Outputs</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">5.2 Parquet Outputs</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false" href="">5.3 Visualization Outputs (Plots)</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<p><strong>Topic → Top Terms</strong></p>
+<p>data/NLPQ1_Anna_spark_lda_topics_ver2.csv</p>
+<p>Contains top terms per topic, including:</p>
+<ul>
+<li>Term indices<br>
+</li>
+<li>Term weights<br>
+</li>
+<li>Human-readable top 15 words (<code>terms_words</code>)</li>
+</ul>
+<hr>
+<p><strong>Document → Dominant Topic Counts</strong></p>
+<p>data/NLPQ1_Anna_spark_lda_topic_counts_ver2.csv</p>
+<p>Contains:</p>
+<ul>
+<li>Dominant topic for each document<br>
+</li>
+<li>Document counts per topic</li>
+</ul>
+<hr>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<p><strong>Document → Topic Distribution</strong></p>
+<p>data/parquet/NLPQ1_Anna_doc_topic_dist_ver2.parquet</p>
+<p>Contains:</p>
+<ul>
+<li><code>id</code><br>
+</li>
+<li><code>subreddit</code><br>
+</li>
+<li><code>topicDistribution</code> (probability vector across 15 topics)</li>
+</ul>
+<hr>
+</div>
+<div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
+<p>Downstream analysis produces multiple figures such as:</p>
+<pre><code>NLPQ1_Anna_topic_sizes_.png
+NLPQ1_Anna_subreddit_topic_heatmap_.png
+NLPQ1_Anna_top_topics_labeled_.png
+NLPQ1_Anna_topic_term_heatmap_.png
+topic_wordclouds_all_topics.png</code></pre>
+</div>
+</div>
+</div>
+<p>Everything was generated for both <strong>with-neoliberal</strong> and <strong>without-neoliberal</strong> versions.</p>
+<hr>
+</section>
+</section>
+<section id="key-insight" class="level3">
+<h3 class="anchored" data-anchor-id="key-insight">Key Insight</h3>
+<section id="overall-thematic-structure-of-ai-discussions-on-reddit" class="level4">
+<h4 class="anchored" data-anchor-id="overall-thematic-structure-of-ai-discussions-on-reddit">Overall Thematic Structure of AI Discussions on Reddit</h4>
+<p>Across the 15 LDA topics, AI-related Reddit conversations can be grouped into four major thematic domains:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">without_neoliberal</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">with_neoliberal</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<p><strong>1. Technical AI Development and Engineering</strong></p>
+<p>This domain includes detailed discussions on running AI models (Topics 3, 9, 10), handling data pipelines, troubleshooting GPU or memory limitations, and using tools from the Stable Diffusion ecosystem (Topic 12). The conversations demonstrate active knowledge sharing among practitioners developing or fine-tuning AI systems.</p>
+<p><strong>2. User Experience, Platforms, and Community Governance</strong></p>
+<p>Several topics (1, 5, 7, 11) involve practical or administrative concerns such as prompting ChatGPT, resolving moderation issues, interacting with bots, and managing image outputs. These discussions reflect the operational realities of using AI tools and participating in AI-focused online communities.</p>
+<p><strong>3. Societal, Philosophical, and Economic Implications of AI</strong></p>
+<p>Topics 0, 8, and 14 show broader reflections on how AI affects humanity, infrastructure, energy consumption, and labor markets. These conversations extend beyond technical details and highlight public engagement with the societal consequences of rapid AI development.</p>
+<p><strong>4. Casual, Cultural, and Entertainment-Oriented Engagement</strong></p>
+<p>Topics 4 and 6 capture non-technical discussions, ranging from gaming and content disputes to light informal conversations. These topics illustrate the cultural integration of AI discussions within everyday online interactions.</p>
+<p>Overall, the topic structure reveals a multifaceted ecosystem where technical expertise, practical usage, societal reflection, and casual social interaction coexist within AI-related Reddit communities.</p>
+</div>
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<p>The inclusion of neoliberal subreddits introduces substantial thematic shifts in AI-related discussions. Across the 15 topics, the thematic structure can be organized into four broad domains:</p>
+<p><strong>1. Technical Model Use, Coding, and Creative Applications</strong></p>
+<p>Topics 0, 1, 3, 8, and 10 capture conversations about running LLMs, writing code, handling data workflows, troubleshooting errors, and generating images or art. These discussions remain core across both models, representing the practical side of AI participation on Reddit.</p>
+<p><strong>2. Political, Economic, and Ideological Debates</strong></p>
+<p>Several topics (2, 5, 6, 9, 11, 12, 13) show a strong influence from neoliberal subreddits. Users discuss elections, political parties, economic incentives, global conflicts, gendered social dynamics, and community governance. This domain is significantly amplified compared to the model without neoliberal content.</p>
+<p><strong>3. Philosophical and Cognitive Reflections on Human Nature and AI</strong></p>
+<p>Topic 7 illustrates deeper cognitive and philosophical inquiries about consciousness, belief, and the nature of human thought. These discussions explore how humans compare to AI systems and what constitutes intelligence or selfhood.</p>
+<p><strong>4. Platform Mechanics, Moderation, and Social Interaction</strong></p>
+<p>Topics 4 and 14 include discussions about serious societal issues, moderation processes, bots, karma, and interactions within the Reddit platform. Users navigate both community rules and broader social or ethical considerations.</p>
+<p>Overall, including neoliberal content shifts the landscape toward more political, economic, and ideological debate, widening the thematic range of AI conversations and revealing how sociopolitical communities contextualize AI within broader societal narratives.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="nlp2-emotion-sentiment-patterns-of-high-engagement-users" class="level2">
+<h2 class="anchored" data-anchor-id="nlp2-emotion-sentiment-patterns-of-high-engagement-users">NLP2: Emotion &amp; Sentiment Patterns of High-Engagement Users</h2>
+<p><strong>Question:</strong></p>
+<p>How do high-engagement contributors (top 1% posters) emotionally express themselves across AI and tech subreddits, and what differences emerge between technical, creative, and general-interest AI communities?</p>
+<section id="analysis-approach" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-approach">Analysis Approach</h3>
+<p>This analysis examines the <strong>emotional tone</strong> of Reddit’s most active AI/tech contributors by focusing on the <strong>top 1% of users</strong> across the ecosystem. The goal is to understand not just what these power users talk about, but <em>how they express themselves</em> emotionally.</p>
+<p>The workflow includes:</p>
+<ol type="1">
+<li><strong>Identifying High-Engagement Users</strong>
+<ul>
+<li>Computed the global 99th-percentile threshold for posting activity<br>
+</li>
+<li>Extracted all comments and submissions from these users for emotion classification</li>
+</ul></li>
+<li><strong>Text Preprocessing</strong>
+<ul>
+<li>Lowercasing, URL removal, markdown stripping<br>
+</li>
+<li>Tokenization + stopword filtering<br>
+</li>
+<li>Reddit-specific cleaning (removing flairs, user tags, formatting noise)</li>
+</ul></li>
+<li><strong>Emotion Classification</strong>
+<ul>
+<li>Applied a multi-category emotion lexicon (joy, love, anger, fear, sadness, surprise, neutral)<br>
+</li>
+<li>Calculated proportional emotion scores per subreddit<br>
+</li>
+<li>Normalized counts to account for subreddit size</li>
+</ul></li>
+<li><strong>Cross-Subreddit Emotional Comparison</strong>
+<ul>
+<li>Categories analyzed:
+<ul>
+<li><strong>Text AI</strong>: ChatGPT, OpenAI, GPT-4, ClaudeAI, PerplexityAI<br>
+</li>
+<li><strong>Creative AI</strong>: StableDiffusion, MidJourney, Sora, AIArt<br>
+</li>
+<li><strong>Research/Tech</strong>: MachineLearning, datascience, programming, computerscience<br>
+</li>
+<li><strong>Futures/Ideology</strong>: Futurology, singularity, neoliberal<br>
+</li>
+<li><strong>Baseline</strong>: AskReddit</li>
+</ul></li>
+</ul></li>
+<li><strong>Visualization</strong>
+<ul>
+<li>Radar charts reveal emotional “profiles” of each subreddit<br>
+</li>
+<li>Highlights which communities express fear, anger, joy, neutrality, or surprise more than others</li>
+</ul></li>
+</ol>
+</section>
+<section id="findings" class="level3">
+<h3 class="anchored" data-anchor-id="findings">Findings</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">Emotion Radar Charts (Group 1)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">Emotion Radar Charts (Group 2)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false" href="">Emotion Radar Charts (Group 3)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-4" role="tab" aria-controls="tabset-6-4" aria-selected="false" href="">Emotion Radar Charts (Group 4)</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<div id="37583896" class="cell" data-execution_count="9">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="nlp_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<div id="142434ad" class="cell" data-execution_count="10">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="nlp_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
+<div id="1706794e" class="cell" data-execution_count="11">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="nlp_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-6-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-4-tab">
+<div id="09bd4141" class="cell" data-execution_count="12">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="nlp_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="key-insights" class="level3">
+<h3 class="anchored" data-anchor-id="key-insights">Key Insights</h3>
+<ul>
+<li><p><strong>Neutral sentiment dominates across all AI subreddits.</strong><br>
+High-engagement users overwhelmingly communicate in a neutral, analytical tone, reflecting information-oriented discussions rather than emotional expression.</p></li>
+<li><p><strong>Technical communities show the flattest emotional profiles.</strong><br>
+Subreddits such as MachineLearning, datascience, programming, and LocalLLaMA exhibit minimal joy, fear, anger, or sadness. Conversations remain focused on debugging, implementation, and model performance rather than personal feelings.</p></li>
+<li><p><strong>Creative AI communities express more emotional variability.</strong><br>
+StableDiffusion, AIArt, and MidJourney display higher levels of surprise, fear, and anger, consistent with debates over creativity, ethics, aesthetics, and model instability.</p></li>
+<li><p><strong>Future-oriented and ideological subreddits show heightened fear and concern.</strong><br>
+Communities like Futurology, singularity, and neoliberal express more fear, sadness, and anger, reflecting societal, economic, and existential anxieties around AI rather than purely technical concerns.</p></li>
+<li><p><strong>AskReddit is the most emotionally expressive baseline.</strong><br>
+When general Reddit users discuss AI, emotional tone spikes — particularly fear and sadness — revealing public uncertainty and mixed reactions toward AI’s rapid advancement.</p></li>
+<li><p><strong>Model-specific subreddits form a tight emotional cluster.</strong><br>
+ChatGPT, ClaudeAI, GPT4, OpenAI, and PerplexityAI show nearly identical sentiment distributions, indicating that power users engage with text-based AI tools in a consistent, utility-driven, and low-emotion manner.</p></li>
+</ul>
+</section>
+</section>
+<section id="nlp3sentiment-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="nlp3sentiment-analysis">NLP3:Sentiment Analysis</h2>
+<p><strong>Question:</strong></p>
+<p>How has sentiment toward different generative AI tools (e.g., ChatGPT, Midjourney, Sora) shifted over time across subreddits?</p>
+<section id="analysis-approach-1" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-approach-1">Analysis Approach</h3>
+<p>This analysis uses a <strong>lexicon-based sentiment analysis</strong> approach to track how sentiment toward different AI tools has evolved over time across Reddit subreddits. The methodology includes:</p>
+<ol type="1">
+<li><strong>Text Preprocessing</strong>:
+<ul>
+<li>Uses Spark ML Pipeline for efficient text processing</li>
+<li>Tokenization, stop word removal, and text cleaning (removes URLs, Reddit formatting, markdown)</li>
+<li>HashingTF with 5,000 features for feature extraction</li>
+</ul></li>
+<li><strong>Sentiment Calculation</strong>:
+<ul>
+<li>Lexicon-based approach using positive and negative word lists</li>
+<li>Calculates sentiment scores ranging from -1 (very negative) to +1 (very positive)</li>
+<li>Normalizes scores based on the ratio of positive to negative sentiment words</li>
+</ul></li>
+<li><strong>Categorization</strong>:
+<ul>
+<li><strong>Text AI</strong>: ChatGPT, OpenAI, GPT-4, Claude, Perplexity</li>
+<li><strong>Creative AI</strong>: Midjourney, Stable Diffusion, Sora, AI Art</li>
+<li><strong>Research/Tech</strong>: GenerativeAI, ArtificialIntelligence, MachineLearning</li>
+<li><strong>Baseline</strong>: AskReddit (with and without AI mentions)</li>
+</ul></li>
+<li><strong>Temporal Aggregation</strong>:
+<ul>
+<li>Aggregates sentiment scores by subreddit, AI category, and time period (monthly)</li>
+<li>Calculates average sentiment, standard deviation, and post counts per time period</li>
+<li>Tracks sentiment trends from June 2023 to June 2024</li>
+</ul></li>
+</ol>
+</section>
+<section id="findings-1" class="level3">
+<h3 class="anchored" data-anchor-id="findings-1">Findings</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true" href="">Sentiment Distribution</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false" href="">Sentiment Trends by Category</a></li></ul>
+<div class="tab-content">
+<div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
+<div id="c4043d1e" class="cell" data-execution_count="13">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="nlp_files/figure-html/cell-14-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
+<div id="2f275ebe" class="cell" data-execution_count="14">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="nlp_files/figure-html/cell-15-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="key-insights-1" class="level3">
+<h3 class="anchored" data-anchor-id="key-insights-1">Key Insights</h3>
+<ul>
+<li><p><strong>Creative AI maintains the highest positive sentiment</strong> (0.20-0.27), significantly outperforming Text AI (0.03-0.13) and Research/Tech (0.09-0.21). Users have more positive wordings when discussing about image generation tools than text-based AI.</p></li>
+<li><p><strong>Text AI sentiment is highly volatile</strong>, fluctuating dramatically with each major model release. Sentiment spikes around announcements (e.g., 0.13 in October 2023) then normalizes as users encounter practical limitations, reflecting the rapid release cycle and mixed user experiences.</p></li>
+<li><p><strong>Research/Tech sentiment declined significantly</strong> from 0.21 (July 2023) to 0.09 (June 2024), suggesting growing concerns or shifting attitudes in technical communities over time.</p></li>
+<li><p><strong>AI discussions are more positive than general Reddit content</strong>: While general AskReddit posts maintain negative sentiment (-0.045 to -0.01), all AI-specific categories show positive sentiment, indicating that AI-related discussions carry distinct emotional tones—combining both excitement and concerns.</p></li>
+</ul>
+</section>
+</section>
+<section id="nlp4-profanity-language-frequency-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="nlp4-profanity-language-frequency-analysis">NLP4: Profanity Language Frequency Analysis</h2>
+<p><strong>Question:</strong> What account (e.g.&nbsp;percentage) of profanity words used to describe AI?</p>
+<section id="analysis-approach-2" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-approach-2">Analysis Approach</h3>
+<p>The <a href="https://github.com/coffee-and-fun/google-profanity-words/blob/main/data/en.txt">Google Profanity Words dataset</a> provides a widely adopted, community-maintained list of offensive and inappropriate terms used across multiple languages. The repository has 676 stars, 249 forks, and active usage within production-grade applications, indicating strong reliability and broad validation.</p>
+<p>The list is:</p>
+<ul>
+<li><p>Open-source, enabling transparent inspection and reproducibility</p></li>
+<li><p>Actively maintained, with frequent updates and community oversight</p></li>
+<li><p>Language-specific (including a dedicated English list), making it suitable for Reddit text analysis</p></li>
+<li><p>Designed for profanity filtering, aligning directly with the goals of detecting toxicity within Reddit comments and submissions</p></li>
+</ul>
+<p>Given these characteristics, the dataset serves as a credible, high-quality lexical resource for robust profanity detection in large-scale NLP pipelines such as this Spark NLP Reddit analysis task.</p>
+<p>The following process include:</p>
+<ul>
+<li>Cleaned text by removing URLs, markdown, usernames, and very short posts.</li>
+<li>Applied Spark NLP preprocessing: tokenization, normalization, stop-word removal, and lemmatization to produce clean tokens.</li>
+<li>Computed profanity metrics (gathered by) per subreddit using Spark-native token filtering.</li>
+<li>Identified top profanity words by counting token frequencies across subreddits.</li>
+<li>Generate visualizations: profanity rate bar chart + per-subreddit word clouds, using sampled comments (30%).</li>
+</ul>
+</section>
+<section id="findings-2" class="level3">
+<h3 class="anchored" data-anchor-id="findings-2">Findings</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true" href="">Percentage of Profanity Words in Reddit Comments by each Subreddit</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false" href="">Word Cloud by each Subreddit</a></li></ul>
+<div class="tab-content">
+<div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
+<div id="87b0f7a0" class="cell" data-execution_count="15">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="nlp_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
+<div id="bb5e2757" class="cell" data-execution_count="16">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="nlp_files/figure-html/cell-17-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="key-insights-2" class="level3">
+<h3 class="anchored" data-anchor-id="key-insights-2">Key Insights:</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true" href="">Percentage of Profanity Words in Reddit Comments by each Subreddit</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-2" role="tab" aria-controls="tabset-9-2" aria-selected="false" href="">Word Cloud by each Subreddit</a></li></ul>
+<div class="tab-content">
+<div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
+<p>The bar chart showcase this pattern: AskReddit leads with the highest profanity percentage (8.22%), followed by neoliberal (7.76%) and Futurology (6.56%), signaling more emotionally charged or socially polarized conversations. Meanwhile, subreddits focused on engineering or research- such as datascience, GPT4, MachineLearning, and computerscience - show lower profanity levels (4–4.6%). PerplexityAI, notably, has the lowest rate (1.49%), indicating highly utility-driven, information-focused discussions with minimal emotional or toxic language. Overall, the results show a clear divide between general-audience or debate-oriented communities and technical AI research communities in terms of emotional tone and toxicity.</p>
+</div>
+<div id="tabset-9-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-2-tab">
+<p>Across the word clouds, the most prominent terms, such as “problem,” “issue,” “error,” “wrong,” “concern,” “hard,” “limit,” and “bad”, indicate that discussions across AI-related subreddits are heavily anchored in frustrations, feature limitations, and technical challenges. These words dominate nearly every community, suggesting a shared pattern: users frequently describe difficulties with AI tools, unexpected behaviors, performance failures, and constraints that hinder workflows. Even in non-technical subreddits, terms like “concern,” “violation,” and “unfortunately” show that sentiment tends toward reporting negative experiences or dissatisfaction.</p>
+<p>Some subreddits amplify specific themes: GPT4, ChatGPT, ClaudeAI, and LocalLLaMA highlight words like “wrong,” “error,” “bad,” “break,” and “slow,” pointing to reliability and accuracy problems. Futurology and AskReddit show larger emotional or general expressions like “hard,” “kill,” “limit,” and “cheap,” reflecting broader worries or sensational narratives about AI. Conversely, PerplexityAI and MachineLearning maintain smaller, more technical clouds focused on concrete issues rather than emotional or vulgar expressions. Overall, the clouds reveal that the core vocabulary across communities centers on problems, errors, and concerns, painting a picture of widespread user frustration and perceived limitations of current AI tools.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<section id="answers-to-nlp-business-questions" class="level3">
+<h3 class="anchored" data-anchor-id="answers-to-nlp-business-questions">Answers to NLP Business Questions</h3>
+<ol type="1">
+<li><strong>What are the dominant topics discussed in AI-related Reddit posts?</strong>:</li>
+</ol>
+<p>examines how ideological communities shape public discourse on artificial intelligence by comparing topic structures from two LDA models: one trained on AI-related Reddit comments excluding neoliberal subreddits, and one incorporating them. Without neoliberal content, discussions concentrate on technical model usage, coding workflows, data engineering, and philosophical reflections on AGI and the future of work. When neoliberal subreddits are included, the thematic landscape broadens markedly, introducing politically charged topics—such as U.S. electoral dynamics, global geopolitics, gender debates, and economic concerns surrounding corporate power and societal change—alongside intensified discussions about moderation and community governance. The comparison reveals that while technical conversations remain consistent across both models, ideological communities significantly amplify political, economic, and social framing around AI. These findings highlight how online community composition shapes the narratives and concerns that emerge in public conversations about artificial intelligence.</p>
+<ol start="2" type="1">
+<li><strong>What emotional and sentiment patterns characterize high-engagement users across AI and tech subreddits, and how do these patterns differ between technical, creative, and general-interest communities?</strong>:</li>
+</ol>
+<p>Analysis of the top 1% most active contributors across AI-related subreddits reveals clear emotional signatures that vary by community type. Technical subreddits (such as MachineLearning, datascience, programming, and LocalLLaMA) overwhelmingly exhibit neutral sentiment, reflecting discussion focused on debugging, implementation challenges, and model performance rather than personal or emotional expression. In contrast, creative AI communities (such as StableDiffusion, AIArt, and MidJourney) display more emotional variability, including elevated levels of fear, anger, and surprise—often tied to debates around artistic creativity, ethics, tool limitations, and unexpected model behavior.</p>
+<p>Subreddits oriented toward societal or future-oriented conversations (Futurology, singularity, neoliberal) show higher proportions of fear, sadness, and anger, revealing broader public anxieties surrounding AI’s economic, political, and existential impacts. Meanwhile, general-audience spaces like AskReddit contain the strongest emotional signals overall, especially fear and sadness, indicating that everyday users engage with AI through a more uncertain and emotionally charged lens. Finally, model-specific communities such as ChatGPT, GPT4, ClaudeAI, and PerplexityAI show nearly identical sentiment distributions: highly neutral with slight frustration spikes, reflecting consistent, utility-driven engagement from power users. Collectively, these findings show that emotional expression around AI depends heavily on community purpose—technical spaces minimize emotion, creative and sociopolitical spaces amplify it, and public forums surface the deepest anxieties and reactions.</p>
+<ol start="3" type="1">
+<li><strong>How has sentiment toward different generative AI tools (e.g., ChatGPT, Midjourney, Sora) shifted over time across subreddits?</strong>:</li>
+</ol>
+<p>Lexicon-based sentiment analysis from June 2023 to June 2024 reveals distinct patterns across AI tool categories. <strong>Creative AI tools</strong> maintain the highest positive sentiment (0.20-0.27), with users expressing more positive language when discussing image generation tools compared to text-based alternatives. <strong>Text AI tools</strong> show high volatility (0.03-0.13), with sentiment spiking around major model releases (e.g., 0.13 in October 2023) then normalizing as users encounter practical limitations. <strong>Research/Tech subreddits</strong> show declining sentiment, dropping from 0.21 (July 2023) to 0.09 (June 2024), suggesting growing concerns in technical communities. Temporal analysis reveals clear hype cycles: sentiment peaks coincide with major releases but return to baseline within 2-4 weeks, indicating that initial excitement gives way to practical usage concerns. Notably, all AI-specific categories show positive sentiment, while general AskReddit content maintains negative sentiment (-0.045 to -0.01), highlighting that AI discussions carry distinct emotional tones combining both excitement and concerns.</p>
+<ol start="4" type="1">
+<li><strong>What account (e.g.&nbsp;percentage) of profanity words used to describe AI?</strong>:</li>
+</ol>
+<p>The analysis of Reddit comments reveals a significant divide in profanity usage and thematic focus across subreddits. AskReddit has the highest profanity rate at 8.22%, while technical subreddits like datascience and MachineLearning show lower levels (4–4.6%), with PerplexityAI at just 1.49%, indicating more constructive discussions. Word clouds highlight a shared frustration across AI-related communities, with terms like “problem,” “error,” and “concern” dominating. Subreddits like GPT4 and ChatGPT emphasize reliability issues, while Futurology and AskReddit express broader emotional concerns about AI. Overall, there’s a clear pattern of user dissatisfaction and the emphasis on technical challenges across communities.</p>
+<hr>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>All NLP code is in <code>code/nlp/</code> directory.</p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>DSAN 6000 Big Data Analytics Project</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Made with <a href="https://quarto.org/">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

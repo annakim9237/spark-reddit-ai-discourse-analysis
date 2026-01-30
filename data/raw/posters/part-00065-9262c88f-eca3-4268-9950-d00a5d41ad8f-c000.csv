@@ -1,0 +1,30 @@
+author,total_posts,num_subreddits,avg_score,max_score,first_post,last_post,active_span_seconds,num_tech_subreddits,tech_subreddits_str
+Cyberpunk_Cephalopod,285,6,4.603508771929825,116,1704778642,1722290830,17512188,6,"Futurology, OpenAI, ChatGPT, StableDiffusion, singularity, LocalLLaMA"
+DrVonSinistro,161,3,9.403726708074535,454,1698563637,1722108727,23545090,3,"OpenAI, ChatGPT, LocalLLaMA"
+Falling_Doc,546,2,9.386446886446887,148,1711566188,1722456079,10889891,2,"Futurology, neoliberal"
+Independent_Ad_2073,438,6,4.897260273972603,210,1685748613,1722384920,36636307,6,"Futurology, OpenAI, ChatGPT, StableDiffusion, singularity, LocalLLaMA"
+IpppyCaccy,390,5,4.235897435897436,77,1693754658,1722366566,28611908,5,"Futurology, ChatGPT, GPT4, singularity, LocalLLaMA"
+JFHermes,148,4,6.27027027027027,173,1686634878,1722426973,35792095,4,"Futurology, StableDiffusion, MachineLearning, LocalLLaMA"
+Naetharu,192,1,7.010416666666667,176,1687277483,1722171695,34894212,1,StableDiffusion
+NotAnAIOrAmI,948,4,3.3734177215189876,235,1685825095,1722387280,36562185,4,"OpenAI, ChatGPT, ClaudeAI, singularity"
+Rehkit,1238,1,5.92891760904685,476,1685620955,1721754720,36133765,1,neoliberal
+Sam-Nales,152,4,3.25,144,1694812855,1722445366,27632511,4,"Futurology, ChatGPT, MachineLearning, singularity"
+TheShitEater,603,1,4.7097844112769485,91,1715569248,1716230420,661172,1,neoliberal
+ThothStreetsDisciple,777,2,2.27027027027027,34,1693189226,1715019465,21830239,2,"StableDiffusion, neoliberal"
+ZCoupon,4763,1,3.867730422002939,279,1685620081,1722449712,36829631,1,neoliberal
+dalovindj,174,3,7.2701149425287355,219,1686228905,1717211395,30982490,3,"Futurology, ChatGPT, singularity"
+eaglessoar,208,5,5.721153846153846,94,1685644724,1722271198,36626474,5,"Futurology, ChatGPT, StableDiffusion, singularity, neoliberal"
+exclaim_bot,268,8,1.1119402985074627,12,1685680450,1722408189,36727739,8,"datascience, OpenAI, ChatGPT, ClaudeAI, computerscience, singularity, programming, LocalLLaMA"
+great_gonzales,756,11,3.0211640211640214,167,1690943767,1722448095,31504328,11,"Futurology, datascience, OpenAI, ChatGPT, StableDiffusion, MachineLearning, computerscience, singularity, neoliberal, programming, LocalLLaMA"
+gthing,502,8,6.603585657370518,552,1685594256,1721970128,36375872,8,"Futurology, OpenAI, ChatGPT, ClaudeAI, StableDiffusion, MachineLearning, singularity, LocalLLaMA"
+icarianshadow,265,3,7.8528301886792455,154,1686084276,1722287090,36202814,3,"ChatGPT, StableDiffusion, neoliberal"
+irritating_maze,322,1,7.003105590062112,121,1691626584,1722182627,30556043,1,neoliberal
+joomla00,199,1,8.175879396984925,173,1686492883,1722248742,35755859,1,Futurology
+lucid23333,292,1,3.01027397260274,113,1699047397,1722461672,23414275,1,singularity
+oldjar7,935,6,3.2181818181818183,181,1699479016,1722468814,22989798,6,"Futurology, OpenAI, ChatGPT, MachineLearning, singularity, LocalLLaMA"
+shing3232,417,3,5.119904076738609,288,1702547769,1722185771,19638002,3,"Futurology, MachineLearning, LocalLLaMA"
+tomdarch,489,2,9.699386503067485,188,1685714502,1722460322,36745820,2,"Futurology, neoliberal"
+type2cybernetic,1784,1,7.696748878923767,707,1685908266,1722425913,36517647,1,neoliberal
+vaendryl,164,1,4.878048780487805,222,1685662722,1722349231,36686509,1,ChatGPT
+whales171,197,2,2.3197969543147208,34,1685597446,1697646594,12049148,2,"StableDiffusion, neoliberal"
+yalag,146,6,11.075342465753424,943,1686089325,1722369764,36280439,6,"Futurology, OpenAI, ChatGPT, StableDiffusion, MachineLearning, singularity"

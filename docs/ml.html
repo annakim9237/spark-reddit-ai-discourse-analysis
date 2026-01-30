@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Machine Learning – DSAN 6000 Big Data Project</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-5b4ad623e5705c0698d39aec6f10cf02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">DSAN 6000 Big Data Project</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./eda.html"> 
+<span class="menu-text">EDA</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./nlp.html"> 
+<span class="menu-text">NLP</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./ml.html" aria-current="page"> 
+<span class="menu-text">ML</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./conclusion.html"> 
+<span class="menu-text">Conclusion</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#business-question-1-score-prediction" id="toc-business-question-1-score-prediction" class="nav-link" data-scroll-target="#business-question-1-score-prediction">Business Question 1: Score prediction</a>
+  <ul class="collapse">
+  <li><a href="#problem-formulation" id="toc-problem-formulation" class="nav-link" data-scroll-target="#problem-formulation">Problem Formulation</a></li>
+  <li><a href="#feature-engineering" id="toc-feature-engineering" class="nav-link" data-scroll-target="#feature-engineering">Feature Engineering</a></li>
+  <li><a href="#model-performance" id="toc-model-performance" class="nav-link" data-scroll-target="#model-performance">Model Performance</a></li>
+  <li><a href="#top-20-words-decreasing-score" id="toc-top-20-words-decreasing-score" class="nav-link" data-scroll-target="#top-20-words-decreasing-score">Top 20 words decreasing Score</a></li>
+  <li><a href="#top-20-words-increasing-score" id="toc-top-20-words-increasing-score" class="nav-link" data-scroll-target="#top-20-words-increasing-score">Top 20 words Increasing Score</a></li>
+  </ul></li>
+  <li><a href="#business-question-2-viralnon-viralbinary" id="toc-business-question-2-viralnon-viralbinary" class="nav-link" data-scroll-target="#business-question-2-viralnon-viralbinary">Business Question 2: viral/non-viral(Binary)</a>
+  <ul class="collapse">
+  <li><a href="#problem-formulation-1" id="toc-problem-formulation-1" class="nav-link" data-scroll-target="#problem-formulation-1">Problem Formulation</a></li>
+  <li><a href="#model-performance-1" id="toc-model-performance-1" class="nav-link" data-scroll-target="#model-performance-1">Model Performance</a></li>
+  <li><a href="#feature-engineering-1" id="toc-feature-engineering-1" class="nav-link" data-scroll-target="#feature-engineering-1">Feature Engineering</a></li>
+  <li><a href="#top-20-words-decreasing-viral-probability" id="toc-top-20-words-decreasing-viral-probability" class="nav-link" data-scroll-target="#top-20-words-decreasing-viral-probability">Top 20 words decreasing Viral Probability</a></li>
+  <li><a href="#top-20-words-increasing-viral-probability" id="toc-top-20-words-increasing-viral-probability" class="nav-link" data-scroll-target="#top-20-words-increasing-viral-probability">Top 20 words Increasing Viral Probability</a></li>
+  </ul></li>
+  <li><a href="#business-question-3-topic-classification-multi-class" id="toc-business-question-3-topic-classification-multi-class" class="nav-link" data-scroll-target="#business-question-3-topic-classification-multi-class">Business Question 3: Topic Classification (Multi-class)</a>
+  <ul class="collapse">
+  <li><a href="#problem-formulation-2" id="toc-problem-formulation-2" class="nav-link" data-scroll-target="#problem-formulation-2">Problem Formulation</a></li>
+  <li><a href="#model-performance-2" id="toc-model-performance-2" class="nav-link" data-scroll-target="#model-performance-2">Model Performance</a></li>
+  <li><a href="#feature-engineering-2" id="toc-feature-engineering-2" class="nav-link" data-scroll-target="#feature-engineering-2">Feature Engineering</a></li>
+  <li><a href="#model-architecture-details" id="toc-model-architecture-details" class="nav-link" data-scroll-target="#model-architecture-details">Model Architecture Details</a></li>
+  <li><a href="#key-findings" id="toc-key-findings" class="nav-link" data-scroll-target="#key-findings">Key Findings</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a>
+  <ul class="collapse">
+  <li><a href="#answers-to-ml-business-questions" id="toc-answers-to-ml-business-questions" class="nav-link" data-scroll-target="#answers-to-ml-business-questions">Answers to ML Business Questions</a></li>
+  <li><a href="#business-implications" id="toc-business-implications" class="nav-link" data-scroll-target="#business-implications">Business Implications</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Machine Learning</h1>
+<p class="subtitle lead">Predictive Models and Classification</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Milestone 3 Deliverable
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This page is populated during <strong>Milestone 3 (Week 6)</strong> with ML findings.</p>
+</div>
+</div>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>This page presents machine learning models addressing [2-3] ML business questions through classification, regression, or clustering.</p>
+</section>
+<section id="business-question-1-score-prediction" class="level2">
+<h2 class="anchored" data-anchor-id="business-question-1-score-prediction">Business Question 1: Score prediction</h2>
+<p><strong>Question:</strong> Can we predict the comment score of a new AI-related post?</p>
+<section id="problem-formulation" class="level3">
+<h3 class="anchored" data-anchor-id="problem-formulation">Problem Formulation</h3>
+<ul>
+<li><strong>Task Type:</strong> Regression</li>
+<li><strong>Target Variable:</strong> Score</li>
+<li><strong>Evaluation Metric:</strong>
+<ul>
+<li>Root Mean Squared Error (RMSE)</li>
+<li>Mean Absolute Error (MAE)</li>
+<li>R-squared (R²)</li>
+</ul></li>
+</ul>
+</section>
+<section id="feature-engineering" class="level3">
+<h3 class="anchored" data-anchor-id="feature-engineering">Feature Engineering</h3>
+<p><strong>Features Used:</strong></p>
+<ul>
+<li><strong>Text-based features (TF–IDF):</strong>
+<ul>
+<li>Lowercased comment text is tokenized with a RegexTokenizer and cleaned with a StopWordsRemover that removes both standard English stopwords and URL/media tokens (e.g., <code>http</code>, <code>https</code>, <code>www</code>, <code>jpg</code>, <code>gif</code>, <code>video</code>, <code>youtube</code>).</li>
+<li>Cleaned tokens are converted into a term-frequency vector with CountVectorizer (<code>tf_features</code>), then transformed into a TF–IDF representation (<code>tfidf_features</code>) via IDF.</li>
+<li>Because this model is Lasso Regression, each word receives a coefficient — meaning we can quantify which words increase or decrease the predicted score of a post.
+<ul>
+<li>Positive weight = higher comment score contribution</li>
+<li>Negative weight = lower score association</li>
+</ul></li>
+</ul></li>
+<li><strong>Topic-based features (LDA topic distribution):</strong>
+<ul>
+<li>An LDA model trained in a separate NLP pipeline provides a <code>topicDistribution</code> vector for each comment.</li>
+<li>This vector encodes how strongly each comment loads onto different latent topics (e.g., model performance, policy discussions, ethical concerns).</li>
+</ul></li>
+<li><strong>Metadata features:</strong>
+<ul>
+<li>From the <code>created_utc</code> timestamp, we derive:
+<ul>
+<li><code>day_of_week</code> (day of week of the comment),</li>
+<li><code>hour</code> (hour of day when the comment was posted).</li>
+</ul></li>
+<li>We also include <code>text_length</code> (character length of the comment) as a simple measure of verbosity.</li>
+<li>These metadata features are combined with TF–IDF and topic features using a VectorAssembler to form the final <code>features</code> vector.</li>
+</ul></li>
+</ul>
+</section>
+<section id="model-performance" class="level3">
+<h3 class="anchored" data-anchor-id="model-performance">Model Performance</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><strong>feature_name</strong></th>
+<th><strong>without_neoliberal</strong></th>
+<th><strong>with_neoliberal</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>day_of_week</strong></td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td><strong>hour</strong></td>
+<td>0.02008788219251471</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td><strong>text_length</strong></td>
+<td>-0.0026749511463122913</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="top-20-words-decreasing-score" class="level3">
+<h3 class="anchored" data-anchor-id="top-20-words-decreasing-score">Top 20 words decreasing Score</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">without neoliberal</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">with neoliberal</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div id="c8fd6b8a" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ml_files/figure-html/cell-2-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div id="e4054ea3" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ml_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="top-20-words-increasing-score" class="level3">
+<h3 class="anchored" data-anchor-id="top-20-words-increasing-score">Top 20 words Increasing Score</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">without neoliberal</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">with neoliberal</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div id="3ac45c3b" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ml_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div id="dc8d7685" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ml_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p><strong>Results:</strong></p>
+<hr>
+<div style="display:flex; gap:20px;">
+<div style="flex:1;">
+<h4 class="anchored">
+Lasso Regression (regParam: 0.10)
+</h4>
+<ul>
+<li>
+RMSE: <b>40.8557</b>
+</li>
+<li>
+MAE: <b>9.7979</b>
+</li>
+<li>
+R²: <b>-0.0507</b>
+</li>
+</ul>
+</div>
+<div style="flex:1;">
+<h4 class="anchored">
+Lasso Regression (regParam: 0.05)
+</h4>
+<ul>
+<li>
+RMSE: <b>41.1928</b>
+</li>
+<li>
+MAE: <b>10.5317</b>
+</li>
+<li>
+R²: <b>-0.0681</b>
+</li>
+</ul>
+</div>
+</div>
+<div style="height:15px;">
+
+</div>
+<div style="display:flex; gap:20px;">
+<div style="flex:1;">
+<h4 class="anchored">
+Lasso Regression (regParam:0.20)
+</h4>
+<ul>
+<li>
+RMSE: <b>40.5023</b>
+</li>
+<li>
+MAE: <b>8.9947</b>
+</li>
+<li>
+R²: <b>-0.0326</b>
+</li>
+</ul>
+</div>
+<div style="flex:1;">
+<h4 class="anchored">
+Gradient Boosted Trees
+</h4>
+<ul>
+<li>
+RMSE: <b>19.2511</b>
+</li>
+<li>
+MAE: <b>6.0207</b>
+</li>
+<li>
+R²: <b>-0.0261</b>
+</li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="business-question-2-viralnon-viralbinary" class="level2">
+<h2 class="anchored" data-anchor-id="business-question-2-viralnon-viralbinary">Business Question 2: viral/non-viral(Binary)</h2>
+<p><strong>Question:</strong> Can we predict whether an AI-related Reddit post will go viral?</p>
+<section id="problem-formulation-1" class="level3">
+<h3 class="anchored" data-anchor-id="problem-formulation-1">Problem Formulation</h3>
+<ul>
+<li><p><strong>Task Type:</strong> Classification</p></li>
+<li><p><strong>Target Variable:</strong> is_viral</p></li>
+<li><p><strong>Binary indicator:</strong></p>
+<p>– version1:</p>
+<pre><code>  - 1 (viral): score over 8
+
+  - 0 (non-viral): all remaining posts</code></pre>
+<p>– version2:</p>
+<pre><code>  - 1 (viral): score over 9
+
+  - 0 (non-viral): all remaining posts</code></pre></li>
+<li><p><strong>Evaluation Metric: </strong> ROC-AUC, PR-AUC, Accuracy, and F1</p></li>
+</ul>
+</section>
+<section id="model-performance-1" class="level3">
+<h3 class="anchored" data-anchor-id="model-performance-1">Model Performance</h3>
+<ul>
+<li><strong>Threshold = 8 (score &gt; 8)</strong></li>
+</ul>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Table</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Plot With Neoliberal</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false" href="">Plot Without Neoliberal</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Metric</th>
+<th>With Neoliberal</th>
+<th>Without Neoliberal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>ROC-AUC</strong></td>
+<td>0.6744541555781245</td>
+<td>0.6496461117943605</td>
+</tr>
+<tr class="even">
+<td><strong>PR-AUC</strong></td>
+<td>0.3336196217031545</td>
+<td>0.20969397994962932</td>
+</tr>
+<tr class="odd">
+<td><strong>Accuracy</strong></td>
+<td>0.8144665268745258</td>
+<td>0.8691944500226501</td>
+</tr>
+<tr class="even">
+<td><strong>F1</strong></td>
+<td>0.7380155817332081</td>
+<td>0.8088830040633056</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div id="de2015fd" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ml_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
+<div id="51384007" class="cell" data-execution_count="6">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ml_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li><strong>Threshold = 9 (score &gt; 9)</strong></li>
+</ul>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">Table</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">Plot With Neoliberal</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false" href="">Plot Without Neoliberal</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Metric</th>
+<th>With Neoliberal</th>
+<th>Without Neoliberal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>ROC-AUC</strong></td>
+<td>0.6741618319775559</td>
+<td>0.6534683877657608</td>
+</tr>
+<tr class="even">
+<td><strong>PR-AUC</strong></td>
+<td>0.3040219686421169</td>
+<td>0.19334420106645303</td>
+</tr>
+<tr class="odd">
+<td><strong>Accuracy</strong></td>
+<td>0.8350602048729413</td>
+<td>0.8825136484422795</td>
+</tr>
+<tr class="even">
+<td><strong>F1</strong></td>
+<td>0.7649779000959348</td>
+<td>0.8278567426464736</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<div id="1c19b87d" class="cell" data-execution_count="7">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ml_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
+<div id="cca61366" class="cell" data-execution_count="8">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ml_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="feature-engineering-1" class="level3">
+<h3 class="anchored" data-anchor-id="feature-engineering-1">Feature Engineering</h3>
+<p><strong>Features Used:</strong></p>
+<ul>
+<li><strong>Text-based features (TF–IDF):</strong>
+<ul>
+<li>Lowercased comment text is tokenized with a RegexTokenizer and cleaned with a StopWordsRemover that removes both standard English stopwords and additional web/media tokens (e.g., <code>http</code>, <code>https</code>, <code>www</code>, <code>jpg</code>, <code>gif</code>, <code>video</code>, <code>youtube</code>).</li>
+<li>The cleaned tokens are transformed into term-frequency vectors with CountVectorizer (<code>tf_features</code>), then into TF–IDF features (<code>tfidf_features</code>) using IDF.</li>
+</ul></li>
+<li><strong>Topic-based features (LDA topicDistribution):</strong>
+<ul>
+<li>A precomputed <code>topicDistribution</code> vector from an LDA model is joined in for each comment.</li>
+<li>This captures higher-level semantic topics (e.g., technical discussion, model usage, risks, policy) and allows the model to leverage topic-level patterns when predicting virality.</li>
+<li>Because the classifier is Logistic Regression, each word receives a coefficient — allowing us to interpret which words increase or decrease the likelihood of a post going viral.
+<ul>
+<li>Positive coef = word pushes the post toward viral class</li>
+<li>Negative coef = word is associated with lower engagement</li>
+</ul></li>
+</ul></li>
+<li><strong>Metadata / context features:</strong>
+<ul>
+<li>From the <code>created_utc</code> timestamp, we derive:
+<ul>
+<li><code>day_of_week</code> (day of the week),</li>
+<li><code>hour</code> (hour of the day).</li>
+</ul></li>
+<li>We also include <code>text_length</code> (character length of the comment).</li>
+<li>All of these are combined with TF–IDF and topic features using a VectorAssembler to form the final <code>features</code> vector consumed by the logistic regression classifier.</li>
+</ul></li>
+</ul>
+</section>
+<section id="top-20-words-decreasing-viral-probability" class="level3">
+<h3 class="anchored" data-anchor-id="top-20-words-decreasing-viral-probability">Top 20 words decreasing Viral Probability</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">without neoliberal</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">with neoliberal</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<div id="83643e23" class="cell" data-execution_count="9">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ml_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<div id="a45207aa" class="cell" data-execution_count="10">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ml_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="top-20-words-increasing-viral-probability" class="level3">
+<h3 class="anchored" data-anchor-id="top-20-words-increasing-viral-probability">Top 20 words Increasing Viral Probability</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">without neoliberal</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">with neoliberal</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<div id="02cd9cda" class="cell" data-execution_count="11">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ml_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<div id="39895a87" class="cell" data-execution_count="12">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ml_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="business-question-3-topic-classification-multi-class" class="level2">
+<h2 class="anchored" data-anchor-id="business-question-3-topic-classification-multi-class">Business Question 3: Topic Classification (Multi-class)</h2>
+<p><strong>Question:</strong> Can we classify Reddit posts into AI topic categories (Text AI, Creative AI, Research/Tech, Other)?</p>
+<section id="problem-formulation-2" class="level3">
+<h3 class="anchored" data-anchor-id="problem-formulation-2">Problem Formulation</h3>
+<ul>
+<li><strong>Task Type:</strong> Multi-class Classification</li>
+<li><strong>Target Variable:</strong> ai_category</li>
+<li><strong>Categories:</strong>
+<ul>
+<li><strong>Text AI:</strong> Posts from subreddits like ChatGPT, OpenAI, ClaudeAI, GPT4, LocalLLaMA</li>
+<li><strong>Creative AI:</strong> Posts from subreddits like StableDiffusion</li>
+<li><strong>Research/Tech:</strong> Posts from subreddits like MachineLearning, DataScience, ComputerScience, Programming, Singularity, Futurology</li>
+<li><strong>Other:</strong> All remaining posts (including non-AI subreddits like AskReddit, Neoliberal)</li>
+</ul></li>
+<li><strong>Evaluation Metric:</strong> Accuracy, F1 Score, Precision, Recall (weighted for multi-class)</li>
+</ul>
+</section>
+<section id="model-performance-2" class="level3">
+<h3 class="anchored" data-anchor-id="model-performance-2">Model Performance</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true" href="">Table</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false" href="">Plot</a></li></ul>
+<div class="tab-content">
+<div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>Accuracy</th>
+<th>F1 Score</th>
+<th>Precision</th>
+<th>Recall</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Neural Network</strong></td>
+<td>0.6842</td>
+<td>0.6820</td>
+<td>0.6856</td>
+<td>0.6842</td>
+</tr>
+<tr class="even">
+<td><strong>Logistic Regression</strong></td>
+<td>0.6544</td>
+<td>0.6507</td>
+<td>0.6590</td>
+<td>0.6544</td>
+</tr>
+<tr class="odd">
+<td><strong>SVM (OneVsRest)</strong></td>
+<td>0.6336</td>
+<td>0.6239</td>
+<td>0.6367</td>
+<td>0.6336</td>
+</tr>
+<tr class="even">
+<td><strong>Random Forest</strong></td>
+<td>0.5681</td>
+<td>0.5057</td>
+<td>0.6030</td>
+<td>0.5681</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
+<div id="fc5d438e" class="cell" data-execution_count="13">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ml_files/figure-html/cell-14-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="feature-engineering-2" class="level3">
+<h3 class="anchored" data-anchor-id="feature-engineering-2">Feature Engineering</h3>
+<p><strong>Features Used:</strong></p>
+<ul>
+<li><strong>Text-based features (TF-IDF):</strong>
+<ul>
+<li>Combined title and selftext are tokenized and processed to remove URLs and basic noise.</li>
+<li>Text is transformed into TF-IDF features using HashingTF (1000 features) and IDF transformation.</li>
+<li>This captures word-level patterns that distinguish different AI topic categories.</li>
+</ul></li>
+<li><strong>Numerical/Metadata features:</strong>
+<ul>
+<li><code>text_length</code>: Character length of processed text</li>
+<li><code>word_count</code>: Number of words in the post</li>
+<li><code>hour_of_day</code>: Hour when the post was created (from <code>created_utc</code> timestamp)</li>
+<li><code>has_url</code>: Binary indicator if the post contains a URL</li>
+<li><code>score</code>: Post score (engagement metric)</li>
+<li><code>num_comments</code>: Number of comments on the post</li>
+</ul></li>
+<li><strong>Data Balancing Strategy:</strong>
+<ul>
+<li>Smart sampling applied to handle class imbalance:
+<ul>
+<li><strong>Downsampled ‘Other’ category</strong> to ~25,000 samples (reducing from 90%+ of data)</li>
+<li><strong>Upsampled ‘Creative AI’ category</strong> to ~12,000 samples (addressing minority class)</li>
+</ul></li>
+<li>This balancing strategy improves model performance on minority AI categories while maintaining representation of the majority class.</li>
+</ul></li>
+<li><strong>Feature Assembly:</strong>
+<ul>
+<li>All features (TF-IDF vectors + numerical features) are combined using VectorAssembler</li>
+<li>Features are standardized using StandardScaler (withStd=True, withMean=False)</li>
+<li>Final feature vector is used for all classification models</li>
+</ul></li>
+</ul>
+</section>
+<section id="model-architecture-details" class="level3">
+<h3 class="anchored" data-anchor-id="model-architecture-details">Model Architecture Details</h3>
+<ul>
+<li><strong>Logistic Regression:</strong> Multi-class classification with maxIter=50</li>
+<li><strong>Random Forest:</strong> 50 trees, maxDepth=10, seed=42</li>
+<li><strong>SVM (OneVsRest):</strong> LinearSVC wrapped with OneVsRest for multi-class support (maxIter=10)</li>
+<li><strong>Neural Network (MLP):</strong> Deep architecture with layers [input_dim, 128, 64, num_classes], maxIter=100</li>
+</ul>
+</section>
+<section id="key-findings" class="level3">
+<h3 class="anchored" data-anchor-id="key-findings">Key Findings</h3>
+<p>The Neural Network model achieved the best performance across all metrics (Accuracy: 68.4%, F1: 68.2%), demonstrating that deep learning architectures can effectively capture complex patterns in text and metadata for topic classification. Logistic Regression and SVM performed similarly (mid-60s accuracy), while Random Forest showed lower performance, particularly in F1 score (50.6%), suggesting it may struggle with the high-dimensional TF-IDF features.</p>
+<p>The smart sampling strategy successfully addressed class imbalance, allowing models to learn meaningful patterns across all four categories rather than being dominated by the “Other” category. This approach is particularly important for practical applications where distinguishing between specific AI tool categories (Text AI, Creative AI, Research/Tech) is more valuable than simply identifying AI-related content.</p>
+</section>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<section id="answers-to-ml-business-questions" class="level3">
+<h3 class="anchored" data-anchor-id="answers-to-ml-business-questions">Answers to ML Business Questions</h3>
+<ol type="1">
+<li><strong>Can we predict the comment score of new AI-related posts?</strong></li>
+</ol>
+<p>Regression models for score prediction achieved moderate performance. Gradient Boosted Trees performed best (RMSE: 19.25, MAE: 6.02, R²: -0.03), followed by Lasso Regression variants (RMSE: 40-41, MAE: 9-10). Negative R² values indicate that predicting exact scores remains challenging, likely due to Reddit’s complex engagement dynamics involving timing, community context, thread momentum, and algorithmic factors beyond textual features. Feature analysis revealed that TF-IDF features carry the most predictive power, with specific words showing consistent positive or negative associations with scores. Metadata features (hour, day of week) showed minimal predictive value, while topic distributions from LDA provided moderate improvement. The analysis suggests that content quality and relevance matter more than posting timing for engagement.</p>
+<ol start="2" type="1">
+<li><strong>Can we predict whether an AI-related post will go viral?</strong></li>
+</ol>
+<p>Binary classification for viral prediction demonstrated stronger performance than score regression. Using a threshold of score &gt; 9, models achieved: ROC-AUC of 0.67, PR-AUC of 0.30 (with neoliberal) / 0.19 (without), Accuracy of 83.5% (with) / 88.3% (without), and F1 scores of 0.76 (with) / 0.83 (without). The without-neoliberal model performed better due to reduced noise from politically-focused content. Logistic regression coefficients revealed linguistic markers of viral content. Words associated with higher virality include specific technical terms, actionable advice, and surprising insights. Words associated with lower engagement include vague expressions, complaint-focused language, and overly general statements. The model demonstrates that viral prediction is more tractable than exact score prediction, as it captures threshold-crossing patterns rather than granular engagement levels.</p>
+<ol start="3" type="1">
+<li><strong>Can we classify Reddit posts into AI topic categories?</strong></li>
+</ol>
+<p>Multi-class topic classification achieved strong performance, with the Neural Network model leading at 68.4% accuracy and 68.2% F1 score. A smart sampling strategy was critical for success—downsampling the dominant “Other” category (from 90%+ to ~25k samples) and upsampling the minority “Creative AI” category (to ~12k samples) allowed models to learn meaningful patterns across all categories. The Neural Network’s deep architecture (128→64→output) effectively captured complex text and metadata patterns, outperforming Logistic Regression (65.4%), SVM with OneVsRest (63.4%), and Random Forest (56.8%). This demonstrates that topic classification is more tractable than exact score prediction, as it focuses on categorical distinctions rather than continuous engagement metrics.</p>
+</section>
+<section id="business-implications" class="level3">
+<h3 class="anchored" data-anchor-id="business-implications">Business Implications</h3>
+<p>[How models can be applied in practice]</p>
+<hr>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>All ML code is in <code>code/ml/</code> directory. Models saved in <code>code/ml/models/</code>.</p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/f0d79bc1-a0fb-4bef-8169-5a702c3e0b81\.netlify\.app\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>DSAN 6000 Big Data Analytics Project</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Made with <a href="https://quarto.org/">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

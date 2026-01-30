@@ -1,0 +1,271 @@
+---
+title: "Conclusion and Recommendations"
+subtitle: "Final Analysis and Business Impact"
+---
+
+::: {.callout-important}
+## Milestone 4 Deliverable
+This page is populated during **Milestone 4 (Week 8)** - Final Submission.
+:::
+
+## Executive Summary
+
+This project analyzed around 68 million Reddit posts and comments from 15 AI-related subreddits spanning June 2023 to July 2024, capturing the peak of the AI boom. Using Apache Spark for distributed computing, we conducted comprehensive exploratory data analysis, natural language processing, and machine learning to understand how online communities processed the rapid emergence of generative AI technologies.
+
+Our analysis revealed distinct community archetypes: technical communities focused on implementation and troubleshooting, model-centric communities centered on specific AI tools, and societal-debate communities concerned with broader implications. We discovered that a small percentage of power users (top 10%) drive the majority of engagement, that profanity usage serves as a proxy for emotional intensity rather than toxicity, and that topic distributions reveal clear specialization across communities.
+
+Key technical achievements include processing more than 8 billion rows of data through Spark pipelines, implementing Latent Dirichlet Allocation (LDA) for 15-topic modeling, conducting sentiment analysis across temporal windows, and building predictive models for comment scores and viral classification. The project demonstrates how big data infrastructure enables nuanced analysis of social discourse at unprecedented scale.
+
+
+## Answers to All 11 Business Questions
+
+### EDA Questions
+
+1. **How do AI subreddit categories differ in user engagement, and how do title characteristics shape the number of comments and scores?**
+
+Analysis of six AI community categories (chatbot-focused, creative-generation, research/technical, social/policy, dev/hardcore, and baseline control) reveals that community dynamics outweigh standard title characteristics in determining engagement. Social/policy communities (Futurology, singularity, neoliberal) lead with an average of 59 comments per post and maximum scores reaching 32,643, responding strongly to short, emotionally resonant titles.
+
+Title length shows minimal correlation with engagement across all categories (Pearson correlation -0.07 to 0.08), with engagement heavily concentrated in titles under 100 characters. Question phrasing does not universally boost engagement—while the baseline control group (AskReddit with 95.4% question posts) shows higher engagement for questions, social/policy communities demonstrate significantly higher scores for statement-style posts. Technical and creative categories show that questions generate more comments but statements achieve higher scores.
+
+Content effectiveness depends on community-specific norms rather than universal principles. Social/policy discussions favor concise, impactful statements (71 characters average) that spark debate, while technical communities respond to detailed questions. Adapting content strategy to each subreddit's characteristics is essential for maximizing engagement.
+
+2. **How do engagement levels change before and after major AI model updates, and which subreddits exhibit the strongest and most persistent hype spikes?**:
+
+Most AI model releases (Claude 2, GPT-4 Turbo, GPT-4o) show immediate engagement spikes in the 2 weeks following release, with post counts and average scores increasing significantly. However, the magnitude and persistence of these spikes vary substantially across different subreddits and model types.
+
+Subreddits directly related to specific AI models (e.g., r/ChatGPT for GPT releases, r/ClaudeAI for Claude releases) exhibit the most pronounced and sustained engagement increases, suggesting that dedicated communities are the primary drivers of hype around new releases.
+
+While initial hype spikes are common, most models show a return to baseline engagement levels within 4-6 weeks post-release. Only the most significant releases (like GPT-4o) demonstrate longer-term sustained interest, indicating that the Reddit community's attention span for new AI models is relatively short-lived unless the model represents a major technological leap.
+
+3. **When is the optimal time to post content on AI-related subreddit to maximize engagement and content quality?**: 
+
+Reddit posting activity is dominated by a strong, universal daily rhythm and weekday focus. Activity is highest from Tuesday to Thursday and lowest on weekends. Globally, the peak posting volume occurs between 17:00–21:00 UTC, aligning with simultaneous active hours in North America and Europe, while the lowest activity is from 6 AM–10 AM UTC. Higher-scoring posts tend to appear just before this volume peak (15:00–17:00 UTC). This pattern, including evening peaks in AI-specific subreddits like r/ChatGPT, reflects that AI-related discussions are primarily conducted during workweek and evening hours.
+
+4. **How do high-engagement contributors behave across the AI/tech subreddit ecosystem?**
+
+High-engagement contributors—the top 1% of users—play a central role in shaping AI discourse across Reddit. Their behavior falls into two groups: specialists, who focus on a single community and drive deep, technical discussions, and generalists, who move across multiple subreddits and connect otherwise separate conversations. These contributors typically show short but intense activity cycles, often concentrated around major AI releases or breakthrough moments. Cross-engagement patterns reveal that communities like r/ChatGPT act as major hubs linking technical, creative, and futurist spaces, while subreddits such as r/LocalLLaMA and r/StableDiffusion anchor more specialized discussions. Overall, the top contributors define the structure and flow of AI conversations, shaping how ideas spread across the broader ecosystem.
+
+### NLP Questions
+
+5. **What are the dominant topics discussed in AI-related Reddit posts?**
+
+LDA analysis with 15 topics revealed AI discussions organize into four major thematic domains: (1) Technical AI Development and Engineering - covering model implementation, data pipelines, and GPU troubleshooting; (2) User Experience, Platforms, and Community Governance - focusing on prompting techniques, moderation, and bot interactions; (3) Societal, Philosophical, and Economic Implications - examining AI's impact on humanity, labor markets, and infrastructure; (4) Casual, Cultural, and Entertainment-Oriented Engagement - capturing gaming discussions and informal conversations.
+Comparing analyses with and without the neoliberal subreddit reveals significant thematic shifts. Including neoliberal content amplifies political, economic, and ideological debate topics (elections, political parties, global conflicts, gendered dynamics), shifting the landscape from primarily technical discussions to broader societal narratives. This demonstrates how different community types fundamentally reshape AI discourse - technical communities focus on implementation, while sociopolitical communities contextualize AI within policy debates and economic implications.
+
+6. **How has the popularity and sentiment around different types of generative AI (e.g., image, text, music, code) evolved across Reddit subreddits over time, and what patterns emerge in user engagement and comment dynamics?**
+
+The evolution of generative AI popularity and sentiment across Reddit reveals distinct patterns for different AI categories. **Text AI tools** (ChatGPT, GPT-4, Claude) show the most dramatic engagement spikes around major model releases, with subreddits like r/ChatGPT and r/OpenAI experiencing 2-3x increases in post volume and average scores immediately following announcements. These spikes are typically short-lived (2-4 weeks), suggesting that text AI communities are highly reactive to new releases but quickly return to baseline discussion levels. **Creative AI tools** (Midjourney, Stable Diffusion, Sora) exhibit more sustained engagement patterns, with image generation subreddits maintaining higher baseline activity and showing less dramatic but more persistent spikes. The temporal hype analysis reveals that Creative AI communities tend to have longer discussion cycles around new features, likely due to the visual and shareable nature of their outputs. **Research/Tech subreddits** (r/MachineLearning, r/generativeai) show the most stable engagement patterns, with gradual increases rather than sharp spikes, reflecting their focus on technical analysis and long-term trends rather than immediate product releases. Across all categories, sentiment analysis indicates that discussions are heavily focused on technical challenges, limitations, and problem-solving, with negative sentiment words like "error," "problem," and "concern" appearing frequently across communities. However, the intensity of these concerns varies by category: Text AI discussions emphasize reliability and accuracy issues, while Creative AI communities focus more on quality and workflow constraints. Overall, the data suggests that Reddit's AI communities are primarily driven by practical usage concerns rather than pure enthusiasm, with engagement patterns reflecting both the technical maturity of different AI categories and the specific needs of their user bases.
+
+6. **How do high-engagement contributors (top 1% posters) emotionally express themselves across AI and tech subreddits, and how do these emotional patterns differ between technical, creative, and general-interest communities?**
+
+Emotion classification of the top 1% most active contributors reveals that AI discourse is overwhelmingly neutral across nearly every subreddit—especially within technical communities. Subreddits such as MachineLearning, datascience, programming, and LocalLLaMA show extremely flat emotional profiles, indicating discussions grounded in debugging, implementation details, and model troubleshooting rather than emotional expression.
+Creative AI subreddits, including StableDiffusion, MidJourney, and AIArt, display noticeably more emotional variability, with higher levels of fear, anger, and surprise. These patterns stem from debates around model quality, artistic ownership, ethics, and unexpected model behavior. In contrast, future-oriented and ideological subreddits like Futurology, singularity, and neoliberal exhibit elevated fear, sadness, and anger—reflecting economic, political, and existential anxieties surrounding AI and automation.
+General-audience spaces such as AskReddit contain the strongest emotional signatures overall, particularly fear and sadness, highlighting that nontechnical users engage with AI from a more emotionally charged perspective. Model-specific subreddits (ChatGPT, GPT-4, ClaudeAI, OpenAI, PerplexityAI) form a tightly clustered emotional group with highly neutral tone and only mild frustration spikes. Overall, emotional patterns reflect the purpose of each community: technical spaces minimize emotion, creative spaces amplify it, and public discussion spaces reveal the deepest anxieties about AI’s societal impact.
+
+7. **How has sentiment toward different generative AI tools (e.g., ChatGPT, Midjourney, Sora) shifted over time across subreddits?**: 
+
+Subreddits focused on image generation tools (Midjourney, Stable Diffusion) consistently exhibit higher average sentiment scores compared to text AI and research/tech communities. This suggests that users find creative AI tools more satisfying or less frustrating than text-based AI tools.
+
+While Creative AI shows overall positive sentiment, individual subreddits within the same category can have very different sentiment patterns. For example, model-specific subreddits (r/ChatGPT, r/ClaudeAI) may show different sentiment trajectories than general AI discussion subreddits, reflecting community-specific experiences and expectations.
+
+When comparing AskReddit posts that mention AI tools versus general AskReddit content, there are distinct sentiment differences, suggesting that discussions specifically about AI tools carry different emotional tones than general Reddit discussions, potentially reflecting both excitement and concerns about AI technology.
+
+8. **What percentage of profanity is used to describe AI across subreddits?**
+
+Profanity analysis using the Google Profanity Words dataset revealed significant variation: AskReddit (8.22%), neoliberal (7.76%), Futurology (6.56%), technical communities (4.0-4.6%), and PerplexityAI (1.49%). Importantly, word cloud analysis shows that profanity primarily expresses technical frustration rather than interpersonal toxicity. Dominant terms include problem, error, wrong, concern, hard, limit, and bad. Thus, indicating dissatisfaction with AI tool performance rather than hostile discourse. This suggests that profanity serves as an emotional release valve for user frustration with technology limitations.
+
+
+### ML Questions
+
+9. **Can we predict the comment score of new AI-related posts?**
+
+Regression models for score prediction achieved moderate performance. Gradient Boosted Trees performed best (RMSE: 19.25, MAE: 6.02, R²: -0.03), followed by Lasso Regression variants (RMSE: 40-41, MAE: 9-10). Negative R² values indicate that predicting exact scores remains challenging, likely due to Reddit's complex engagement dynamics involving timing, community context, thread momentum, and algorithmic factors beyond textual features.
+Feature analysis revealed that TF-IDF features carry the most predictive power, with specific words showing consistent positive or negative associations with scores. Metadata features (hour, day of week) showed minimal predictive value, while topic distributions from LDA provided moderate improvement. The analysis suggests that content quality and relevance matter more than posting timing for engagement.
+
+
+10. **Can we predict whether an AI-related post will go viral?**
+
+Binary classification for viral prediction demonstrated stronger performance than score regression. Using a threshold of score > 9, models achieved: ROC-AUC of 0.67, PR-AUC of 0.30 (with neoliberal) / 0.19 (without), Accuracy of 83.5% (with) / 88.3% (without), and F1 scores of 0.76 (with) / 0.83 (without). The without-neoliberal model performed better due to reduced noise from politically-focused content.
+Logistic regression coefficients revealed linguistic markers of viral content. Words associated with higher virality include specific technical terms, actionable advice, and surprising insights. Words associated with lower engagement include vague expressions, complaint-focused language, and overly general statements. The model demonstrates that viral prediction is more tractable than exact score prediction, as it captures threshold-crossing patterns rather than granular engagement levels.
+
+
+11. **Can we classify Reddit posts into AI topic categories?**
+
+Multi-class topic classification achieved strong performance, with the Neural Network model leading at 68.4% accuracy and 68.2% F1 score. The task involved classifying posts into four categories: Text AI (ChatGPT, OpenAI, etc.), Creative AI (StableDiffusion), Research/Tech (MachineLearning, DataScience, etc.), and Other. A smart sampling strategy was critical for success—downsampling the dominant "Other" category (from 90%+ to ~25k samples) and upsampling the minority "Creative AI" category (to ~12k samples) allowed models to learn meaningful patterns across all categories. The Neural Network's deep architecture (128→64→output) effectively captured complex text and metadata patterns, outperforming Logistic Regression (65.4%), SVM with OneVsRest (63.4%), and Random Forest (56.8%). This demonstrates that topic classification is more tractable than exact score prediction, as it focuses on categorical distinctions rather than continuous engagement metrics. The model's ability to distinguish between specific AI tool categories (Text AI, Creative AI, Research/Tech) provides practical value for content organization, recommendation systems, and understanding community specialization patterns.
+
+
+## Major Findings
+
+### Key Insight 1: Posting Volume and Engagement Are Misaligned Across Time
+
+Posting activity peaks between 17:00–21:00 UTC, but average scores peak earlier in the day (14:00–16:00 UTC) and on Sundays when volume is relatively low. High competition during peak posting hours suppresses visibility, meaning the highest-quality engagement occurs during moderate-activity windows, not when the platform is most active.
+
+**Business Impact:** Content creators and AI-focused communities can increase visibility and engagement by posting during strategic low-competition periods rather than peak traffic hours, improving reach without increasing posting frequency.
+
+
+### Key Insight 2: User Frustration Centers on Reliability Rather Than Capability
+
+NLP analysis, particularly profanity and sentiment tracking, reveals that user frustration predominantly concerns reliability issues (errors, wrong outputs, inconsistent behavior, performance degradation) rather than capability limitations. Word clouds across all communities prominently feature problem, error, wrong, concern, and limit. This indicates a maturation from early excitement about AI capabilities to pragmatic concern about production reliability.
+
+**Business Impact:** AI product development should prioritize consistency and reliability over flashy new capabilities. Users value dependable performance for established features more than experimental additions that work inconsistently. Product roadmaps should emphasize stability improvements, error reduction, and predictable behavior. Marketing should set realistic expectations rather than overpromising capabilities.
+
+
+### Key Insight 3: Engagement Is Driven by Semantic and Emotional Language
+
+ML results show that engagement—both score and virality—is shaped primarily by the type of words used, not by timing or length.
+Low-engagement posts consistently rely on conversational or administrative terms (“thanks,” “yeah,” “replies,” “comment”).
+High-engagement posts instead contain narrative, emotional, visual, or surprising model-related language (“survived,” “hilarious,” “hallucinated,” “backlash”).
+When the neoliberal subreddit is included, politically charged or conflict-oriented language further boosts engagement, revealing different dynamics across communities.
+
+**Business Impact:** 
+
+- Reduce low-information phrases; they lower engagement everywhere.
+
+- Use narrative, emotional, or visually evocative cues to raise engagement.
+
+- Match writing style to community norms:
+
+    - Technical subs reward novelty and demonstrations.
+
+    - Political subs reward emotional or ideological framing.
+
+- Word choice is a core driver of engagement.
+
+## Addressing the High-Level Problem
+
+**Original Problem Statement:**
+
+With the advent of AI, how were online communities processing that shift in real time? Who was talking? What were they saying? And how did different AI subreddits evolve as the technology accelerated?
+
+**How Our Analysis Addresses It:**
+
+Our comprehensive analysis directly answers these questions through systematic examination of more than 66 million data points across 14 months. We identified who was talking through user behavior analysis, revealing power user dynamics, community-specific participation patterns, and cross-community engagement. We understood what they were saying through topic modeling that uncovered 15 distinct themes spanning technical implementation, creative applications, and societal implications.
+
+We tracked how communities evolved through temporal analysis showing engagement spikes tied to product releases, sentiment shifts from initial enthusiasm to pragmatic assessment, and the emergence of specialized subcultures within broader AI discourse. The stratified analysis across community types revealed that AI discourse fragmented rather than unified—technical, creative, and policy communities developed parallel but distinct conversations.
+
+Most significantly, we discovered that the AI boom processed itself through community specialization. Rather than creating unified excitement or concern, generative AI prompted different communities to focus on their core interests: implementation for developers, creativity for artists, economic disruption for policy analysts. This fragmentation suggests that AI's societal impact manifests differently across social strata, with each group experiencing distinct aspects of the technological shift.
+
+
+## Business Recommendations
+
+### Recommendation 1: Post During Strategic Low-Competition Windows
+
+**Based on:** Temporal analysis showing that although posting volume peaks at 17:00–21:00 UTC, average scores peak earlier (14:00–16:00 UTC) and on Sundays, when overall posting competition is lower.
+
+**Action:** Schedule posts for early afternoon UTC and Sundays to maximize visibility. Use automated scheduling tools for consistent posting. Avoid peak posting hours where competition is high and visibility declines.
+
+**Expected Impact:** Higher engagement without increasing posting volume, improved post visibility, and more efficient content distribution across AI-focused communities.
+
+### Recommendation 2: Prioritize Reliability Over Feature Expansion
+
+
+**Based on:** Profanity analysis showing frustration centers on errors and reliability, sentiment analysis revealing declining enthusiasm, and word cloud analysis emphasizing problem-focused vocabulary
+
+
+**Action:** Shift product development priorities toward consistency, error reduction, and predictable behavior. Implement rigorous testing before releases, maintain stable APIs, provide clear error messages, and establish performance benchmarks. Communicate honestly about limitations rather than overpromising capabilities. Create reliability metrics and report them transparently to communities.
+
+**Expected Impact:** Reduced user frustration, increased production adoption in professional settings, stronger competitive positioning based on dependability, and improved long-term user retention. Users will perceive the product as trustworthy rather than experimental, enabling broader enterprise deployment.
+
+
+### Recommendation 3: Optimize Messaging Using High-Engagement Linguistic Patterns
+
+**Based on:** ML results showing that word choice—not length or timing—is the strongest predictor of engagement.
+High-engagement posts use narrative, emotional, visual, or surprising model-behavior language, while low-engagement posts rely on conversational fillers or administrative terms.
+
+**Action:** Craft posts with narrative hooks, emotional resonance, or concrete details. Minimize filler phrases like “thanks,” “hi,” or “dm.” Tailor messaging to community type:
+
+- Technical subs → emphasize novelty, demos, insights
+
+- Political/social subs → incorporate emotional framing or identity cues (when appropriate)
+
+**Expected Impact:** Higher post virality and increased user interaction. More effective communication strategies tailored to community norms. Greater share of attention for announcements, feature updates, and research content.
+## Limitations and Future Work
+
+### Limitations
+
+- **Subreddit Imbalance:** AskReddit dominates dataset with 58.5M rows versus smaller communities with thousands. 
+    - **Mitigation:** Implemented stratified sampling and per-subreddit normalization for all analyses. Results accurately reflect individual community characteristics.
+
+- **Sentiment Analysis Complexity:**  AI discussions involve technical jargon, sarcasm, memes, and context-dependent meaning that challenge sentiment classifiers. Emoji processing presents additional complexity. 
+    - **Mitigation:** Used lexicon-based approaches with domain-specific validation. Acknowledged limitations in detecting irony and cultural references. Future work should implement domain-specific sentiment models trained on AI discourse.
+
+
+### Future Work
+
+- **Cross-Platform and Extended Subreddit Analysis:** Extend analysis to additional subreddits beyond the 15 studied and to other social media platforms including Twitter, Instagram, Hacker News, GitHub discussions, and Discord servers. Compare discourse patterns across platforms with different affordances, demographics, and communication norms to understand how platform design shapes AI discussions.
+
+- **Advanced NLP Models:** Experiment with transformer-based models such as BERT for improved topic extraction, sentiment analysis, and semantic understanding. Domain-specific fine-tuning on AI discourse could enhance detection of sarcasm, memes, and technical jargon. Explore GPT-style architectures for content generation and predictive modeling of discussion trajectories.
+
+- **Bot vs. Real User Analysis:** Develop classification models to distinguish bot accounts from human users. Investigate which subreddits contain higher proportions of bot activity and how bots influence discussion dynamics, sentiment patterns, and information spread. Analyze whether bots amplify certain narratives or moderate community behavior.
+
+
+## Technical Achievements
+
+### Big Data Processing
+
+- Processed 71 million rows of Reddit data (8 billion in full corpus) across 15 subreddits spanning 14 months (June 2023 - July 2024)
+- Utilized Apache Spark cluster with distributed computing across multiple nodes for parallel processing, handling compatibility challenges between Spark 4.0 and 3.7 versions
+- Achieved efficient Parquet-based data storage without compression (learned that compressing Parquet files paradoxically increases file size), enabling fast filtering and aggregation operations
+- Implemented stratified sampling strategies to handle extreme dataset imbalance while preserving statistical validity across communities
+- Optimized Spark NLP pipelines for tokenization, lemmatization, and feature extraction at scale, managing memory constraints and 4-hour EC2 instance time limits
+- Adapted workflow to work on local laptops when EC2 resources were limited due to budget constraints, demonstrating flexibility in big data processing approaches
+
+
+### Analytical Breadth
+
+- **EDA:** Conducted comprehensive exploratory analysis including temporal trends, textual analysis, user behavior patterns, and engagement metrics across community categories. Generated dozens of visualizations capturing activity patterns, score distributions, title characteristics, and posting dynamics. Analyzed relationships between title length, question phrasing, and engagement levels across different community types.
+- **NLP:** Implemented Latent Dirichlet Allocation (LDA) for 15-topic modeling with interpretable thematic domains, TF-IDF feature extraction for keyword analysis, profanity detection using validated Google Profanity Words lexicon, and comparative linguistic analysis between community types. Processed millions of text documents through Spark NLP pipelines with extensive data subsetting to manage memory constraints. Achieved thorough text cleaning through stopword removal, token filtering, and lemmatization to maximize analysis quality.
+- **ML:** Built regression models (Lasso Regression, Gradient Boosted Trees) for score prediction achieving MAE of 6.02, though noting that regression proved time-consuming at scale. Developed binary classification models (Logistic Regression) for viral prediction achieving 83-88% accuracy. Implemented feature engineering combining TF-IDF, topic distributions from LDA, and metadata features. Conducted comprehensive model evaluation using ROC-AUC, PR-AUC, RMSE, MAE, and coefficient interpretation for explainability
+
+
+## Lessons Learned
+
+### Technical Lessons
+
+- **Lesson about Spark/big data processing:**
+    - Compatibility problems between Spark 4.0 and 3.7 required careful version management. EC2 instances had 4-hour time limits before automatic shutdown, necessitating checkpoint strategies and job segmentation. Due to budget constraints, team members worked on local laptops rather than EC2 instances, demonstrating adaptability.
+    - Team coordination challenge: repeated efforts downloading and filtering the same S3 buckets for each member could have been optimized through better data sharing protocols.
+- **Lesson about NLP at scale:**
+    - Data subsetting proved essential to make analysis manageable within cluster constraints. 
+    - Memory management required constant attention, with careful monitoring of Spark executor memory and driver memory.
+    - Text cleaning, stopword removal, and token filtering must be as thorough as possible before analysis to prevent costly repeated run-throughs. Clean data upstream saves exponential time downstream. LDA tuning (topics, iterations, vocabulary) requires experimentation but clean preprocessing is the foundation for interpretable results.
+- **Lesson about ML pipeline:**
+    - Regression models proved extremely time-consuming at scale, requiring hours of computation for modest performance gains. Binary classification provided better return on investment with faster training and clearer business value. Feature engineering combining text, semantics, and metadata requires careful pipeline orchestration. Model interpretability through coefficient analysis provides business value even when predictive accuracy is moderate. Therefore, understanding what drives engagement matters more than perfect prediction.
+
+
+### Domain Lessons
+
+- **Insight about Reddit communities:**
+    -  More users comment than post, creating longer threads and demonstrating Reddit's controversial discussion-oriented nature. Subreddits function as distinct information ecosystems with specialized norms and vocabularies. Power users drive disproportionate value through knowledge-building. Moderation quality creates vastly different environments even within the same platform. Score meanings vary dramatically—what's viral in one community is average in another.
+
+- **Insight about social media analysis:**
+    -  Difficult to detect sarcasm and memes through sentiment analysis; therefore, context and cultural knowledge are required. Emoji processing presents significant challenges for NLP pipelines. Social discourse fragments along interest lines rather than converging toward consensus. Profanity indicates frustration with technology rather than interpersonal toxicity. Deleted/removed content introduces systematic bias requiring careful consideration.
+
+- **Insight about AI Discourse Domain:**
+    - Sentiment is more uplifting when discussing creative AI applications compared to technical implementations. Social policy and non-technical communities are generally more negative about AI implications. User frustration centers on reliability rather than capability. The users want consistency more than flashy features. Revolutionary technologies process through community specialization rather than unified narratives. Early adopters serve as evangelists and educators, creating valuable secondary content that amplifies product reach beyond official marketing.
+
+
+
+## Final Thoughts
+
+This project captured a unique historical moment: the peak of the AI boom from mid-2023 through mid-2024, when generative AI transitioned from experimental novelty to mainstream technology. By analyzing 71 million authentic conversations across 15 communities, we documented how different segments of online society processed this technological shift in real time.
+
+What emerges is not a unified story of excitement or concern, but rather a mosaic of specialized communities each focusing on their core interests. Developers worried about implementation details. Artists explored creative possibilities. Policy analysts debated economic disruption. This fragmentation suggests that AI's societal impact will manifest differently across social strata, with each group experiencing distinct aspects of the transformation.
+
+From a technical perspective, the project demonstrated that big data infrastructure enables nuanced analysis of social discourse at unprecedented scale. Apache Spark's distributed computing allowed us to process billions of rows, extract meaningful patterns, and build predictive models that would be impossible with traditional tools. The combination of exploratory analysis, natural language processing, and machine learning provided complementary insights that collectively paint a comprehensive picture of AI discourse.
+
+Perhaps most significantly, we learned that understanding technology adoption requires examining authentic conversations rather than surveys or controlled studies. Reddit's unfiltered discussions reveal what people actually think and feel when experimenting with new tools, encountering limitations, and integrating AI into their workflows. The frustrations expressed, questions asked, and solutions shared provide invaluable insights for anyone building or deploying AI technologies.
+
+As we continue into 2025 and beyond, these conversations will serve as a historical record of how society processed one of the most significant technological shifts of the 21st century. Future researchers will look back at this period to understand not just what AI could do, but how people reacted, adapted, and ultimately shaped the technology through their collective feedback and experimentation.
+
+The journey through this data reminded us that behind every statistic is a person trying to understand how AI affects their work, creativity, and life. By listening to these voices at scale, we gained insights that will inform more human-centered AI development in the years ahead.
+
+
+---
+
+## Acknowledgments
+
+- **Team Members:** Mandy Sun, Erika Atoma, Yu-Chien(Violet) Lin, Anna Hyunjung Kim
+- **Course:** DSAN 6000 Big Data Analytics
+- **Tools:** Apache Spark, PySpark, Quarto
+- **Data Source:** Reddit via Pushshift archives

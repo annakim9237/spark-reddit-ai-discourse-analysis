@@ -1,0 +1,10 @@
+subreddit,author,title,body,score,created_utc
+computerscience,BL1NDX3N0N,,"I’m calling absolute BS, VM escaping isn’t a trivial task and tens to hundreds of thousands of dollars can be awarded in bounties for finding such vulnerabilities. You really think a teacher is going to throw money and fame away to impress students when the former route is the most impressive? That’s also not including the amount of network and local software vulnerabilities required for exploitation which would be separate bounties.",599,1705014299
+computerscience,nuclear_splines,,"The words \"for scratch\" are doing a lot of heavy lifting there. Most large software is built on dozens to hundreds of libraries written by previous programmers, which in turn are built on more libraries written by previous programmers.
+
+The game developers likely didn't write code to load images and video off the hard drive - they're using a game engine that provides much of that functionality, and the game engine is using existing software like libPNG to decode PNG images, or something like OpenGL to render graphics to the screen, which in turn are built on functionality provided by the operating system.
+
+That's not to say that making a video game is easy by any stretch. Building a large modern video game is an _enormous_ undertaking. But we're also standing on the shoulders of giants, and if you were to count all the code at all those layers written by so many hands over so many years, your 8 million lines may be a significant undercount.",306,1704945398
+computerscience,nuclear_splines,/r/ComputerScience will be going dark starting June 12th in protest against Reddit's API changes which will kill 3rd party apps & tools,,288,1686430573
+computerscience,BL1NDX3N0N,,"The answers here are weird, the reason is because of shortening words. People who say gooey do so because there are less syllables. UI and “ooey” have the same amount of syllables so there is zero gain.",201,1706695171
+computerscience,ninjadude93,,Not the correct question. Every language has different pros and cons and which language you use depends on your problem,162,1705258144

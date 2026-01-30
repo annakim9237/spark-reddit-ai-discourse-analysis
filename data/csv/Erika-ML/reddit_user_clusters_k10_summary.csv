@@ -1,0 +1,11 @@
+cluster,cluster_label,n_users,mean_comment_count,median_comment_count,top_primary_tool
+0,Power devs: coding help & debugging,13990,1.1698355968548964,1.0,ChatGPT
+1,Prompt experimenters & jailbreak crowd,14299,1.1676341002867334,1.0,ChatGPT
+2,Career & job search / upskilling,12857,1.1575795286614297,1.0,ChatGPT
+3,Tool comparisons & which AI should I use?,16128,1.2087053571428572,1.0,ChatGPT
+4,"Product feedback, reliability & bug reports",8677,1.2606891782874265,1.0,ChatGPT
+5,Creators & marketers (content generation),15631,1.1742690806730216,1.0,ChatGPT
+6,Students & learners (homework / studying),30444,2.1099395611614766,1.0,ChatGPT
+7,"Ethics, safety & policy debates",10477,1.3046673666125799,1.0,ChatGPT
+8,API / integrations & plugins builders,9307,1.1360266466100784,1.0,ChatGPT
+9,General chat / off-topic exploration,11798,1.2536023054755043,1.0,ChatGPT

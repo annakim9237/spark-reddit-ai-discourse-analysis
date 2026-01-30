@@ -1,0 +1,59 @@
+/* Custom styles for DSAN 6000 Project Website */
+
+/* Improve readability */
+body {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Make callouts more prominent */
+.callout {
+    border-left-width: 5px;
+    margin: 1.5em 0;
+}
+
+/* Style for code blocks */
+pre {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    padding: 1rem;
+}
+
+/* Improve table styling */
+table {
+    margin: 1.5em 0;
+}
+
+/* Style for images */
+img {
+    max-width: 100%;
+    height: auto;
+    margin: 1em 0;
+    border-radius: 0.25rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+/* Navigation improvements */
+.navbar {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+/* Enhance headings */
+h1, h2, h3 {
+    margin-top: 1.5em;
+    margin-bottom: 0.75em;
+}
+
+h1 {
+    border-bottom: 2px solid #dee2e6;
+    padding-bottom: 0.3em;
+}
+
+/* Style for question sections */
+.question-section {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin: 2em 0;
+}

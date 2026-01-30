@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>AI Discourse at Scale: Topic, Sentiment, and Community Dynamics Across Reddit – DSAN 6000 Big Data Project</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-5b4ad623e5705c0698d39aec6f10cf02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">DSAN 6000 Big Data Project</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./eda.html"> 
+<span class="menu-text">EDA</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./nlp.html"> 
+<span class="menu-text">NLP</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./ml.html"> 
+<span class="menu-text">ML</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./conclusion.html"> 
+<span class="menu-text">Conclusion</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#team-members" id="toc-team-members" class="nav-link active" data-scroll-target="#team-members">Team Members</a></li>
+  <li><a href="#project-overview" id="toc-project-overview" class="nav-link" data-scroll-target="#project-overview">Project Overview</a>
+  <ul class="collapse">
+  <li><a href="#dataset" id="toc-dataset" class="nav-link" data-scroll-target="#dataset">Dataset</a></li>
+  <li><a href="#business-questions" id="toc-business-questions" class="nav-link" data-scroll-target="#business-questions">Business Questions</a></li>
+  </ul></li>
+  <li><a href="#methodology" id="toc-methodology" class="nav-link" data-scroll-target="#methodology">Methodology</a>
+  <ul class="collapse">
+  <li><a href="#data-processing-infrastructure" id="toc-data-processing-infrastructure" class="nav-link" data-scroll-target="#data-processing-infrastructure">Data Processing Infrastructure</a></li>
+  <li><a href="#analysis-pipeline" id="toc-analysis-pipeline" class="nav-link" data-scroll-target="#analysis-pipeline">Analysis Pipeline</a></li>
+  </ul></li>
+  <li><a href="#navigation" id="toc-navigation" class="nav-link" data-scroll-target="#navigation">Navigation</a></li>
+  <li><a href="#repository" id="toc-repository" class="nav-link" data-scroll-target="#repository">Repository</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">AI Discourse at Scale: Topic, Sentiment, and Community Dynamics Across Reddit</h1>
+<p class="subtitle lead">DSAN 6000 Big Data Analytics - Fall 2024</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="team-members" class="level2">
+<h2 class="anchored" data-anchor-id="team-members">Team Members</h2>
+<ul>
+<li>Mandy Sun</li>
+<li>Erika Atoma</li>
+<li>Yu-Chien(Violet) Lin</li>
+<li>Anna Hyunjung Kim</li>
+</ul>
+</section>
+<section id="project-overview" class="level2">
+<h2 class="anchored" data-anchor-id="project-overview">Project Overview</h2>
+<p><strong>High-Level Problem Statement:</strong></p>
+<p>As AI adoption accelerated at an unprecedented pace, online communities became one of the most immediate reflections of how society interpreted this change. Yet, while AI tools grew exponentially, far less is understood about how everyday users talked about them—what excited them, what worried them, and how discussions evolved across different AI-focused spaces.</p>
+<p>Our core problem is to uncover how AI discourse formed, shifted, and diversified within Reddit communities during the peak of the AI boom. By analyzing subreddit trajectories, engagement dynamics, sentiment change, and topical divergence, we aim to understand what digital conversations can reveal about public perception, technological anxiety, and community-driven innovation.</p>
+<section id="dataset" class="level3">
+<h3 class="anchored" data-anchor-id="dataset">Dataset</h3>
+<ul>
+<li><p><strong>Source:</strong> Reddit Comments and Submissions</p></li>
+<li><p><strong>Time Period:</strong> June 1, 2023 to July 31, 2024</p></li>
+<li><p><strong>Data Scale and Size:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Data Type</th>
+<th>Total Rows</th>
+<th>Size (GB)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Comments</td>
+<td>3,675,768,958</td>
+<td>7.7</td>
+</tr>
+<tr class="even">
+<td>Submissions</td>
+<td>567,890,869</td>
+<td>0.384</td>
+</tr>
+</tbody>
+</table>
+<p><br></p></li>
+<li><p><strong>Subreddits:</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 47%">
+<col style="width: 52%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Thematic Category</th>
+<th>Included Subreddits</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>General Discussion &amp; Public Sentiment</strong></td>
+<td>AskReddit</td>
+</tr>
+<tr class="even">
+<td><strong>AI Product &amp; Model Communities</strong></td>
+<td>ChatGPT, ClaudeAI, PerplexityAI, OpenAI, GPT4</td>
+</tr>
+<tr class="odd">
+<td><strong>Open-Source Model Development &amp; Creative Tools</strong></td>
+<td>LocalLLaMA, StableDiffusion</td>
+</tr>
+<tr class="even">
+<td><strong>Technical, Research, and Employment Communities</strong></td>
+<td>MachineLearning, datascience, programming, computerscience</td>
+</tr>
+<tr class="odd">
+<td><strong>Societal, Political, and Futurist Perspectives</strong></td>
+<td>Futurology, neoliberal, singularity</td>
+</tr>
+</tbody>
+</table>
+<p><br></p></li>
+<li><p><strong>Filtered Data Scale:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>subreddit</th>
+<th>num_comments</th>
+<th>num_submissions</th>
+<th>total_rows</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>AskReddit</td>
+<td>55851868</td>
+<td>2686082</td>
+<td>58537950</td>
+</tr>
+<tr class="even">
+<td>neoliberal</td>
+<td>4673171</td>
+<td>35352</td>
+<td>4708523</td>
+</tr>
+<tr class="odd">
+<td>ChatGPT</td>
+<td>1748893</td>
+<td>145862</td>
+<td>1894755</td>
+</tr>
+<tr class="even">
+<td>singularity</td>
+<td>1166552</td>
+<td>37112</td>
+<td>1203664</td>
+</tr>
+<tr class="odd">
+<td>Futurology</td>
+<td>898463</td>
+<td>15884</td>
+<td>914347</td>
+</tr>
+<tr class="even">
+<td>StableDiffusion</td>
+<td>763492</td>
+<td>74526</td>
+<td>838018</td>
+</tr>
+<tr class="odd">
+<td>LocalLLaMA</td>
+<td>425095</td>
+<td>31020</td>
+<td>456115</td>
+</tr>
+<tr class="even">
+<td>OpenAI</td>
+<td>337768</td>
+<td>25574</td>
+<td>363342</td>
+</tr>
+<tr class="odd">
+<td>programming</td>
+<td>325140</td>
+<td>31396</td>
+<td>356536</td>
+</tr>
+<tr class="even">
+<td>datascience</td>
+<td>193664</td>
+<td>24717</td>
+<td>218381</td>
+</tr>
+<tr class="odd">
+<td>MachineLearning</td>
+<td>146901</td>
+<td>37191</td>
+<td>184092</td>
+</tr>
+<tr class="even">
+<td>ClaudeAI</td>
+<td>59790</td>
+<td>5097</td>
+<td>64887</td>
+</tr>
+<tr class="odd">
+<td>computerscience</td>
+<td>31181</td>
+<td>7504</td>
+<td>38685</td>
+</tr>
+<tr class="even">
+<td>GPT4</td>
+<td>4009</td>
+<td>1623</td>
+<td>5632</td>
+</tr>
+<tr class="odd">
+<td>PerplexityAI</td>
+<td>33</td>
+<td>28</td>
+<td>61</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+</section>
+<section id="business-questions" class="level3">
+<h3 class="anchored" data-anchor-id="business-questions">Business Questions</h3>
+<p>We address 10 business questions spanning three analytical approaches:</p>
+<p><strong>Exploratory Data Analysis (EDA):</strong></p>
+<ol type="1">
+<li>What percentage of highly-scored submissions generate low-quality discussions (few comments with high controversiality)?</li>
+<li>How has the popularity and sentiment around different types of generative AI (e.g., image, text, music, code) evolved across Reddit subreddits over time, and what patterns emerge in user engagement and comment dynamics?</li>
+<li>When is the optimal time to post content on AI-related subreddits to maximize engagement and content quality?</li>
+<li>What are the behavioral patterns of the top 1% contributors across the AI/tech sphere? Are top contributors specialists or generalists? Which subreddit combinations are most frequently co-visited? How long have users been active?</li>
+</ol>
+<p><strong>Natural Language Processing (NLP):</strong></p>
+<ol start="5" type="1">
+<li>What are the dominant topics discussed in AI-related Reddit posts?</li>
+<li>What sentiment patterns characterize each AI and tech subreddit when focusing specifically on high-engagement users?</li>
+<li>How has sentiment toward different generative AI tools (e.g., ChatGPT, Midjourney, Sora) shifted over time across subreddits?</li>
+<li>What account (e.g.&nbsp;the percentage) of pessimistic words used to describe AI?</li>
+</ol>
+<p><strong>Machine Learning (ML):</strong></p>
+<ol start="9" type="1">
+<li>Can we predict the comment score of a new AI-related post?</li>
+<li>Can we predict whether an AI-related Reddit post will go viral?</li>
+</ol>
+<p>See <a href="https://github.com/your-repo/BUSINESS_QUESTIONS.md">BUSINESS_QUESTIONS.md</a> for detailed technical approaches.</p>
+</section>
+</section>
+<section id="methodology" class="level2">
+<h2 class="anchored" data-anchor-id="methodology">Methodology</h2>
+<section id="data-processing-infrastructure" class="level3">
+<h3 class="anchored" data-anchor-id="data-processing-infrastructure">Data Processing Infrastructure</h3>
+<ul>
+<li><strong>Platform:</strong> Apache Spark cluster on AWS EC2</li>
+<li><strong>Processing:</strong> Distributed computing with PySpark</li>
+<li><strong>Storage:</strong> Amazon S3 for data lake architecture</li>
+<li><strong>Scale:</strong> Processing hundreds of millions of rows</li>
+</ul>
+</section>
+<section id="analysis-pipeline" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-pipeline">Analysis Pipeline</h3>
+<ol type="1">
+<li><strong>Data Acquisition &amp; Filtering</strong> (Milestone 0)
+<ul>
+<li>Copy full Reddit dataset from source bucket</li>
+<li>Filter to subreddits of interest</li>
+<li>Generate dataset statistics</li>
+</ul></li>
+<li><strong>Exploratory Data Analysis</strong> (Milestone 1) → <a href="./eda.html">EDA Page</a>
+<ul>
+<li>Statistical analysis</li>
+<li>Temporal patterns</li>
+<li>Community comparisons</li>
+</ul></li>
+<li><strong>Natural Language Processing</strong> (Milestone 2) → <a href="./nlp.html">NLP Page</a>
+<ul>
+<li>Sentiment analysis</li>
+<li>Topic modeling</li>
+<li>Text mining</li>
+</ul></li>
+<li><strong>Machine Learning</strong> (Milestone 3) → <a href="./ml.html">ML Page</a>
+<ul>
+<li>Feature engineering</li>
+<li>Model training and evaluation</li>
+<li>Prediction and classification</li>
+</ul></li>
+<li><strong>Final Analysis</strong> (Milestone 4) → <a href="./conclusion.html">Conclusion</a>
+<ul>
+<li>Synthesis of findings</li>
+<li>Business recommendations</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="navigation" class="level2">
+<h2 class="anchored" data-anchor-id="navigation">Navigation</h2>
+<p>Use the navigation bar above to explore:</p>
+<ul>
+<li><strong><a href="./eda.html">EDA</a></strong>: Exploratory data analysis with statistical insights and temporal patterns</li>
+<li><strong><a href="./nlp.html">NLP</a></strong>: Natural language processing analysis including sentiment and topics</li>
+<li><strong><a href="./ml.html">ML</a></strong>: Machine learning models and predictions</li>
+<li><strong><a href="./conclusion.html">Conclusion</a></strong>: Summary of findings and recommendations</li>
+</ul>
+</section>
+<section id="repository" class="level2">
+<h2 class="anchored" data-anchor-id="repository">Repository</h2>
+<ul>
+<li><strong>GitHub:</strong> https://github.com/gu-dsan6000/fall-2025-project-team05</li>
+<li><strong>Documentation:</strong> All code, data outputs, and analysis documentation available in repository</li>
+</ul>
+<hr>
+<p><em>Last updated: Dec 10, 2025</em></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/f0d79bc1-a0fb-4bef-8169-5a702c3e0b81\.netlify\.app\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>DSAN 6000 Big Data Analytics Project</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Made with <a href="https://quarto.org/">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
