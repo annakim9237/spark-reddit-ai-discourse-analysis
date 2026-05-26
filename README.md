@@ -20,7 +20,7 @@ By capturing the scale and structure of AI-related discourse on Reddit, this ana
 
 This project analyzes a large-scale Reddit archive containing comments and submissions stored in parquet format. The dataset spans June 2023 through July 2024, covering a pivotal 14-month period during which public interest in generative AI grew rapidly. Because the full archive contains billions of rows and hundreds of gigabytes of data, the analysis required distributed computing rather than single-machine processing.
 
-## Dataset Characteristics after filtering(June 2023 – July 2024)
+## Dataset Characteristics(June 2023 – July 2024)
 
 | Data Type     | Date Range Start | Date Range End | Total Rows     | 
 |---------------|------------------|----------------|----------------|
