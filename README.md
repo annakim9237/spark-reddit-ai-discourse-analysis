@@ -22,10 +22,10 @@ This project analyzes a large-scale Reddit archive containing comments and submi
 
 ## Dataset Characteristics after filtering(June 2023 – July 2024)
 
-| Data Type     | Date Range Start | Date Range End | Total Rows     | Size (GB) |
-|---------------|------------------|----------------|----------------|-----------|
-| Comments      | 2023-06-01       | 2024-07-31     | 3,675,768,958  | 7.7       |
-| Submissions   | 2023-06-01       | 2024-07-31     |   567,890,869  | 0.384     |
+| Data Type     | Date Range Start | Date Range End | Total Rows     | 
+|---------------|------------------|----------------|----------------|
+| Comments      | 2023-06-01       | 2024-07-31     | 3,675,768,958  |
+| Submissions   | 2023-06-01       | 2024-07-31     |   567,890,869  |
 
 ## Filtered Subreddits
 
